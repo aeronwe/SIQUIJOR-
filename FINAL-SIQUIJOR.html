@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 10 Best Places You Absolutely Must Visit in Siquijor Island</title>
+    <meta name="description" content="Discover the top 10 must-see places in Siquijor, Philippines. From stunning waterfalls to serene beaches, this guide covers the best of the Island of Fire. Plan your ultimate Siquijor travel adventure today!">
+    <meta name="keywords" content="Siquijor attractions, Siquijor travel guide, best places in Siquijor, Siquijor waterfalls, Siquijor beaches">
+    <meta name="author" content="Airon Jay">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+
+    @font-face {
+        font-family: 'BARABARA';
+        src: url('fonts/BARABARA.woff2') format('woff2'),
+        url('fonts/BARABARA.woff') format('woff');
+    }
+        :root {
+            --forest-green: #1E3D33;
+            --rust: #8B4513;
+            --charcoal: #333333;
+            --sand: #F4F1DE;
+            --deep-shadow: rgba(30, 61, 51, 0.3);
+        }
+
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.8;
+            color: var(--charcoal);
+            margin: 0;
+            background: var(--sand);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(45deg, rgba(30, 61, 51, 0.9), rgba(30, 61, 51, 0.8)),
+                        url('https://apenoni.com/wp-content/uploads/2014/09/Siquijor-Island-cover-1024x768.jpg') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            margin-bottom: -10vh;
+
+
+        }
+
+        .hero h1 {
+            font-family: 'BARABARA', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin: 0;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            max-width: 800px;
+            padding: 0 1rem;
+            color: var(--sand);
+        }
+
+        /* Attractions Grid */
+        .attraction-grid {
+            max-width: 1200px;
+            margin: 8rem auto;
+            padding: 0 2rem;
+            display: grid;
+            gap: 6rem;
+        }
+
+        .attraction-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .attraction-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-image {
+            height: 450px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 10px 10px 0 var(--deep-shadow);
+            transition: all 0.4s ease;
+        }
+
+        .card-image:hover {
+            transform: translate(-10px, -10px);
+            box-shadow: 20px 20px 0 var(--deep-shadow);
+        }
+
+        .card-image a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .card-image:hover img {
+            transform: scale(1.03);
+        }
+
+        .card-content {
+            position: relative;
+            padding: 2rem 1rem 1rem;
+        }
+
+        .card-number {
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 6rem;
+            color: var(--rust);
+            opacity: 0.2;
+            position: absolute;
+            top: -3rem;
+            right: 0;
+            z-index: -1;
+        }
+
+        .card-content h2 {
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 2rem;
+            color: var(--forest-green);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            margin-top: 3rem;
+            position: relative; 
+        }
+
+        .card-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .card-content ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Why Section */
+        .why-siquijor {
+            background: var(--forest-green);
+            color: white;
+            padding: 8rem 2rem;
+            margin: 10rem 0;
+            clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+        }
+
+        .why-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .why-content h2 {
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .tips {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 3rem;
+            display: inline-block;
+            text-align: left;
+            backdrop-filter: blur(5px);
+        }
+
+        .tips h3 {
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .tips ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Floating CTA */
+        .floating-cta {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--rust);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .floating-cta:hover {
+            transform: scale(1.05) rotate(-2deg);
+            background: #6B2C0F;
+        }
+
+        /* Booking Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 61, 51, 0.95);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--sand);
+            margin: 5% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+            animation: modalSlide 0.3s ease-out;
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--forest-green);
+        }
+
+        /* Form Styles */
+        #bookingForm {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-weight: 600;
+            color: var(--forest-green);
+        }
+
+        input, select {
+            padding: 0.8rem;
+            border: 2px solid var(--forest-green);
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        button[type="submit"] {
+            background: var(--rust);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background: #6B2C0F;
+        }
+
+        /* Confirmation Message */
+        .confirmation-message {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--forest-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            animation: floatUp 0.3s ease-out;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        @keyframes floatUp {
+            from { transform: translate(-50%, 20px); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .attraction-card {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .card-image {
+                height: 300px;
+                box-shadow: 5px 5px 0 var(--deep-shadow);
+            }
+
+            .card-number {
+                font-size: 4rem;
+                top: -1rem;
+            }
+
+            .hero {
+                clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                padding: 1.5rem;
+    
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div>
+            <h1>The 10 Best Places You Absolutely Must Visit in Siquijor Island</h1>
+            </div>
+    </header>
+
+    <main class="attraction-grid">
+        <!-- 1. Cambugahay Falls -->
+        <div class="attraction-card">
+            <div class="card-image">
+                <a href="https://www.google.com/maps/place/Cambugahay+Falls/@9.1399018,123.6240944,932m/data=!3m2!1e3!4b1!4m6!3m5!1s0x33ab2328a2cb5c9f:0xbded64825d8d42e3!8m2!3d9.1398965!4d123.6266693!16s%2Fg%2F11bwzypscm?entry=ttu&g_ep=EgoyMDI1MDExNS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+                    <img src="https://media.istockphoto.com/id/1393867314/photo/waterfalls-in-siquijor-philippines.jpg?s=612x612&w=0&k=20&c=S-oxZZHt2G-vqfYB-3RiYJEJD--8XML0UfJfpEiyyrk=" alt="Cambugahay Falls" loading="lazy">
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-number">01</div>
+                <h2>Cambugahay Falls – A Tropical Paradise</h2>
+                <p>If you're looking for the ultimate natural experience in Siquijor, Cambugahay Falls should be your first stop. This stunning waterfall is known for its multi-tiered structure, with each level featuring inviting turquoise pools perfect for swimming. You can even try rope swinging into the cool water! Surrounded by lush greenery, this spot is not only a favorite for adventurers but also for those who want to relax and soak in the beauty of nature. It’s a perfect spot to spend a few hours away from the hustle and bustle of daily life.</p>
+                <h3>Why You’ll Love It:</h3>
+                <ul>
+                    <li>Clear, blue pools perfect for swimming.</li>
+                    <li>Thrilling rope swings.</li>
+                    <li>Peaceful surroundings, ideal for relaxation.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2. Salagdoong Beach -->
+        <div class="attraction-card">
+            <div class="card-image">
+                <a href="https://www.google.com/maps/place/Salagdoong+Beach+Resort/@9.2193264,123.6715705,15z/data=!4m10!1m2!2m1!1sSalagdoong+Beach+Cliff+Diving!3m6!1s0x33ab192ac853eb45:0x3555079cc7735c59!8m2!3d9.2129426!4d123.6812298!15sCh1TYWxhZ2Rvb25nIEJlYWNoIENsaWZmIERpdmluZ1ofIh1zYWxhZ2Rvb25nIGJlYWNoIGNsaWZmIGRpdmluZ5IBDHB1YmxpY19iZWFjaJoBI0NoWkRTVWhOTUc5blMwVkpRMEZuU1VReGFVcFBVMUJCRUFF4AEA-gEFCLAFEEE!16s%2Fg%2F11h111jz55?entry=ttu&g_ep=EgoyMDI1MDExNS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiW4fXO5CJKjVjqPRHqXAEVhmPQsk1-t6CH3Yee1qXymV-ttWECLGLHp_AEbMs41KWgaoC7ZunMZaG7CJZU8W165UNKP8tAVsaqWs4vPtH7alaWcRtROd-QkkHIULg5oPTJUhgYhtOn2CM/s1600/Salagdoong-Beach-Siquijor.jpg" alt="Salagdoong Beach" loading="lazy">
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-number">02</div>
+        
+                <h2>Salagdoong Beach – Cliff Diving & Relaxing by the Sea</h2>
+                <p>For thrill-seekers, Salagdoong Beach is a must-visit! This beach is famous for its cliff-diving spots—one at 5 meters and another at 10 meters. If jumping from a cliff into the clear, turquoise waters sounds like your kind of fun, then you’re in for a treat! But don’t worry if you’re not into cliff diving—the beach itself is perfect for swimming, sunbathing, or snorkeling. The surrounding cliffs and scenic views also make it a great spot to capture some incredible photos.</p>
+                <h3>Why You’ll Love It:</h3>
+                <ul>
+                    <li>Epic cliff diving experiences.</li>
+                    <li>Beautiful, clear waters for swimming.</li>
+                    <li>A great mix of adventure and relaxation.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 3. Paliton Beach -->
+        <div class="attraction-card">
+            <div class="card-image">
+                <a href="https://www.google.com/maps/place/Paliton+Beach" target="_blank">
+                    <img src="https://shoestringdiary.wordpress.com/wp-content/uploads/2017/09/paliton_beach19ss_diaries1.jpg?w=1366" alt="Paliton Beach" loading="lazy">
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-number">03</div>
+                <h2>Paliton Beach – Little Boracay</h2>
+                <p> Paliton Beach is known as the "Little Boracay of Siquijor" because of its beautiful sunsets and fine white beaches. It is located within San Juan on Siquijor Island, Philippines. This calm beach is perfect for swimming activities like swimming, snorkeling, and surfing because of its  immaculate blue water.</p>
+                <h3>Why You’ll Love It:</h3>
+                <ul>
+                    <li>Pristine White Sand.</li>
+                    <li>Perfect for Photography.</li>
+                    <li>Great for Families and Couples.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 4. Lugnason Falls -->
+        <div class="attraction-card">
+            <div class="card-image">
+                <a href="https://www.google.com/maps/place/Lugnason+Falls/@9.1482402,123.5347162,2197m/data=!3m1!1e3!4m6!3m5!1s0x33ab3dd3a4b7fe6b:0x45d3bf956a22d26e!8m2!3d9.1485494!4d123.5337612!16s%2Fg%2F11bzv6p3qs?entry=ttu&g_ep=EgoyMDI1MDExNS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+                    <img src="https://www.funinthephilippines.com/wp-content/uploads/2024/10/cover-photo-lugnason-falls.webp" alt="Lugnason Falls" loading="lazy">
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-number">04</div>
+                <h2>Lugnason Falls – Hidden Beauty</h2>
+                <p>If you’re looking for a more tranquil and lesser-known waterfall, head to Lugnason Falls. This hidden gem is perfect for those who want to escape the crowds. With its cool, clear water and stunning tropical backdrop, Lugnason Falls is a peaceful spot to swim and relax. The natural pools are perfect for a refreshing dip after a short walk through the lush forest.</p>
+                <h3>Why You’ll Love It:</h3>
+                <ul>
+                    <li>Less crowded, more peaceful than other spots.</li>
+                    <li>Natural swimming pools surrounded by lush greenery.</li>
+                    <li>A perfect place to unwind.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 5. St. Francis of Assisi Church -->
+        <div class="attraction-card">
+            <div class="card-image">
+                <a href="https://www.google.com/maps/place/St.+Francis+of+Assisi+Church/@9.2153689,123.5113438,931m/data=!3m2!1e3!4b1!4m6!3m5!1s0x33ab15c4543faedf:0x9e01132936e94da6!8m2!3d9.2153636!4d123.5139187!16s%2Fg%2F1pzyw7by0?entry=ttu&g_ep=EgoyMDI1MDExNS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+                    <img src="https://i.ibb.co/yXYn647/PXL-20221219-060733890.jpg" alt="St. Francis of Assisi Church" loading="lazy">
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-number">05</div>
+                <h2>St. Francis of Assisi Church – A Slice of History</h2>
+                <p>For a touch of history and culture, don’t miss St. Francis of Assisi Church. Built in 1774, this church is a beautiful example of Spanish colonial architecture. The separate bell tower is one of its standout features, and its charming interior offers a peaceful escape from your island adventure. If you’re a history enthusiast or just enjoy admiring beautiful structures, this historical gem will definitely leave an impression.</p>
+                <h3>Why You’ll Love It:</h3>
+                <ul>
+                    <li>A historical church built in the 18th century.</li>
+                    <li>Beautiful colonial architecture.</li>
+                    <li>A peaceful, reflective atmosphere.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 6. Guiwanon Spring Park -->
+        <div class="attraction-card">
+            <div class="card-image">
+                <a href="https://www.google.com/maps/place/Guiwanon+Spring+Park/@9.2316925,123.5634614,931m/data=!3m2!1e3!4b1!4m6!3m5!1s0x33ab16fa17c44d7d:0x81088bec05a916ef!8m2!3d9.2316872!4d123.5660363!16s%2Fg%2F11cp5q9mrb?entry=ttu&g_ep=EgoyMDI1MDExNS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+                    <img src="https://i.ibb.co/nQR2F31/IMG-20180827-174847.jpg" alt="Guiwanon Spring Park" loading="lazy">
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-number">06</div>
+            
+                <h2>Guiwanon Spring Park – Connect with Nature</h2>
+                <p>Guiwanon Spring Park offers a unique way to connect with nature. This mangrove park is full of wooden walkways that wind through the lush landscape, perfect for a peaceful stroll. It’s an excellent place to enjoy Siquijor’s natural beauty, with an abundance of marine life in the area. Whether you're looking to unwind or simply enjoy the serenity, Guiwanon Spring Park is a great place to explore.</p>
+                <h3>Why You’ll Love It:</h3>
+                <ul>
+                    <li>Scenic wooden walkways through mangroves.</li>
+                    <li>Ideal for nature walks and spotting wildlife.</li>
+                    <li>A peaceful place to connect with the environment.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 7. Kagusuan Beach -->
+        <div class="attraction-card">
+            <div class="card-image">
+                <a href="https://www.google.com/maps/place/Kagusuan+Beach" target="_blank">
+                    <img src="https://sandee.com/_next/image?url=https%3A%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipMyfHWqLJ8r_eVpQyEOrRbmXKBTEZT9W2NjtVA%3Ds1600-k-no&w=3840&q=75" alt="Kagusuan Beach" loading="lazy">
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-number">07</div>
+                <h2>Kagusuan Beach – Your Own Private Paradise</h2>
+                <p>For those who prefer to escape the tourist crowds, Kagusuan Beach is a perfect getaway. This secluded beach is quieter and less visited, offering the perfect setting for those who want to enjoy the beauty of Siquijor in peace. The calm, clear waters are great for swimming, and the tranquil atmosphere makes it a great place to unwind and relax.</p>
+                <h3>Why You’ll Love It:</h3>
+                <ul>
+                    <li>A secluded and peaceful beach.</li>
+                    <li>Clear, calm waters for swimming.</li>
+                    <li>Perfect for a private retreat away from the crowds.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 8. Coco Grove Beach Resort -->
+        <div class="attraction-card">
+            <div class="card-image">
+                <a href="https://www.google.com/maps/place/Coco+Grove+Beach+Resort/@9.1420852,123.5094388,932m/data=!3m2!1e3!4b1!4m9!3m8!1s0x33ab3e8dfa490d0f:0x599daaa949dc6d2a!5m2!4m1!1i2!8m2!3d9.1420799!4d123.5120137!16s%2Fg%2F1tflcsgf?entry=ttu&g_ep=EgoyMDI1MDExNS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+                    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/399763539.jpg?k=2347d88da3214e47f63b0f811ae5ee595302c4f76d55bcf0f2be076923a7d8f4&o=&hp=1" alt="Coco Grove Beach Resort" loading="lazy">
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-number">08</div>
+                <h2>Coco Grove Beach Resort – Ultimate Luxury & Adventure</h2>
+                <p>If you’re looking for a more luxurious experience, Coco Grove Beach Resort is the perfect place to stay. Offering private beaches, snorkeling and diving opportunities, and top-tier amenities, Coco Grove is the ideal spot for those who want to combine comfort and adventure. Whether you're diving into the ocean or relaxing at the resort’s spa, this is where you can have it all.</p>
+                <h3>Why You’ll Love It:</h3>
+                <ul>
+                    <li>A luxurious resort with private beaches.</li>
+                    <li>Plenty of activities like snorkeling and diving.</li>
+                    <li>Perfect for those who want relaxation and adventure in one place.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 9. St. Isidro Labrador Church (Lazi Church) -->
+        <div class="attraction-card">
+            <div class="card-image">
+                <a href="https://www.google.com/maps/place/Lazi+Church/@9.1279085,123.4692031,11z/data=!4m6!3m5!1s0x33ab233b66f28c7f:0xc69e505ce941edea!8m2!3d9.1279085!4d123.633998!16s%2Fm%2F012lb9ld?entry=ttu&g_ep=EgoyMDI1MDExNS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+                    <img src="https://i.ibb.co/9TGST7d/PXL-20221218-152440077.jpg" alt="St. Isidro Labrador Church" loading="lazy">
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-number">09</div>
+                
+                <h2>St. Isidro Labrador Church – Step Back in Time </h2> 
+                <p>The St. Isidro Labrador Church, also known as Lazi Church, is another historical site that’s worth a visit. Built in 1884, the church is made from pink coral stone and timber, giving it a unique and charming appearance. The church is not only a place of worship but also a stunning piece of Siquijor’s history and architecture.</p>
+                <h3>Why You’ll Love It:</h3>
+                <ul>
+                    <li>Beautiful pink coral stone and timber structure.</li>
+                    <li>A piece of Siquijor’s history and culture.</li>
+                    <li>A peaceful and serene environment to reflect.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 10. Candanay Sur Beach -->
+        <div class="attraction-card">
+            <div class="card-image">
+                <a href="https://www.google.com/maps/place/Candanay+Sur+Beach" target="_blank">
+                    <img src="https://i.ibb.co/DzySYx9/IMG-20221002-124009.jpg" alt="Candanay Sur Beach" loading="lazy">
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-number">10</div>
+                <h2>Candanay Sur Beach - Hidden Gem</h2>
+                <p>Candanay Sur Beach in Siquijor is a quiet, off-the-beaten-path spot ideal for those seeking peace and natural beauty. The beach has soft, light sand and clear waters, great for swimming or a relaxing walk. Located near a fishing village, it offers a chance to see local life and traditional fishing methods. 
+
+                <p>The area is rarely crowded, making it perfect for uninterrupted relaxation. The sunrises are stunning, with vibrant colors that are a treat for photographers and anyone who loves a beautiful view. While there aren’t many tourist facilities, the beach’s untouched feel adds to its charm. It’s easy to reach from the main road, and the coconut trees around it enhance the tropical vibe.</p>    
+                <p>Be aware that there are some stray dogs and litter in spots, so visitors are encouraged to help keep the beach clean and preserve its natural beauty.</p>
+                <h3>Why You’ll Love It:</h3>
+                <ul>
+                    <li>Peaceful Atmosphere.</li>
+                    <li>Budget-Friendly Destination.</li>
+                    <li>Authentic and Untouched.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Why Siquijor Section -->
+    <section class="why-siquijor">
+        <div class="why-content">
+            <h2>Why Visit Siquijor?</h2>
+            <p>Siquijor is not just about its beautiful beaches and waterfalls—it’s about the experience of immersing yourself in an island that blends adventure, history, and natural beauty. From the adrenaline-pumping activities to the peaceful spots where you can unwind, Siquijor offers something for everyone. So pack your bags, rent a scooter, and get ready to explore this amazing island!</p>
+            
+            <div class="tips">
+                <h3>Travel Tips for Siquijor:</h3>
+                <ul>
+                    <li>Bring <a href="https://pds.org.ph/sun-protection/" target="_blank" class="tip-link" style="color: black;">sunscreen</a> and stay hydrated as the sun can be intense</li>
+                    <li><a href="https://book2wheel.com/activity/motorbike-scooter-rental-siquijor-philippines" target="_blank" class="tip-link" style="color: black;">Renting a scooter</a> is the best way to explore the island at your own pace</li>
+                    <li>Visit during the <a href="https://siquijorprovince.com/about-siquijor/#:~:text=%C2%A0Like%20the%20rest%20of%20the%20Philippines%2C%20Siquijor%20has%20a%20tropical%20climate.%20Wet%20season%20is%20between%20June%20and%20October%20and%20the%C2%A0dry%20season%C2%A0is%20from%20November%20to%20May." target="_blank" class="tip-link" style="color: black;">dry season</a> (between November to May) for the best weather</li>
+                    <li>Be respectful of the <a href="https://www.traveloka.com/en-ph/explore/destination/discovering-paradise-in-siquijors-best-beaches-for-travel-enthusiasts-trp/447609#:~:text=Sustainable%20Travel,authentic%20travel%20experience." style="color: black;">local culture</a> and nature</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating CTA Button -->
+    <a href="#book" class="floating-cta">📅 Plan Your Trip</a>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Plan Your Siquijor Adventure</h2>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="dates">Travel Dates</label>
+                    <input type="date" id="dates" required>
+                </div>
+                <div class="form-group">
+                    <label for="people">Number of Travelers</label>
+                    <select id="people" required>
+                        <option value="1">1 Person</option>
+                        <option value="2">2 People</option>
+                        <option value="3">3 People</option>
+                        <option value="4">4 People</option>
+                        <option value="5+">5+ People</option>
+                    </select>
+                </div>
+                <button type="submit">Submit Inquiry</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Scroll Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.attraction-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Booking Modal Logic
+        const modal = document.getElementById('bookingModal');
+        const btn = document.querySelector('.floating-cta');
+        const span = document.querySelector('.close');
+
+        // Open modal
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.style.display = 'block';
+        });
+
+        // Close modal
+        span.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Close when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Form Submission
+        document.getElementById('bookingForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Hide modal
+            modal.style.display = 'none';
+
+            // Show confirmation
+            const confirmation = document.createElement('div');
+            confirmation.className = 'confirmation-message';
+            confirmation.innerHTML = `
+                <h3>📬 Inquiry Sent!</h3>
+                <p>We'll contact you within 24 hours!</p>
+            `;
+            document.body.appendChild(confirmation);
+            
+            // Remove confirmation after 3 seconds
+            setTimeout(() => {
+                confirmation.remove();
+            }, 3000);
+        });
+
+        // Close with ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
