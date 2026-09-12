@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/function.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,9 +22,9 @@
 
     $navLinks = [
         ['label' => 'Home', 'url' => '#home'],
-        ['label' => 'Rooms', 'url' => '#rooms'],
-        ['label' => 'Booking', 'url' => '#booking'],
-        ['label' => 'Dining', 'url' => '#dining'],
+        ['label' => 'Rooms', 'url' => 'rooms.php'],
+        ['label' => 'Booking', 'url' => 'booking.php'],
+        ['label' => 'Dining', 'url' => 'dining.php'],
         ['label' => 'Experiences', 'url' => '#experiences'],
         ['label' => 'Contact', 'url' => '#contact'],
     ];
@@ -30,17 +33,17 @@
         [
             'title' => 'Luxury Rooms',
             'description' => '5 unique room categories from cozy twins to private villas all with premium in room amenities.',
-            'icon' => '<svg viewBox="0 0 24 24"><path d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3 1.34 3 3 3zm0-4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm12-3h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4zm2 8h-8V9h6c1.1 0 2 .9 2 2v4z"/></svg>',
+            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bed-double"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/></svg>',
         ],
         [
             'title' => 'El Juwan Dining',
             'description' => 'Filipino cuisine, poolside cocktails, and beachfront BBQ under the stars.',
-            'icon' => '<svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>',
+            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-utensils"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>',
         ],
         [
             'title' => 'Malaya',
             'description' => 'Island hopping, sunset sailing, and forest trails awaits you.',
-            'icon' => '<svg viewBox="0 0 100 100"><path d="M29 84C31 72.5 67 72.5 69 84Z"/><path d="M44.2 76C44.5 54 43 38 41.5 27L44.5 27C46 38 47.5 54 47.8 76Z"/><circle cx="37.5" cy="37.2" r="3.4"/><circle cx="46.2" cy="34" r="2.9"/><circle cx="42.5" cy="27" r="2.5"/><path d="M42.5 27C36 17 28 19 23 31.5C27.5 24 35 23.5 42.5 27Z"/><path d="M42.5 27C34 24 24 33 26.8 46.8C28.5 38 35 34 42.5 27Z"/><path d="M42.5 27C34 16 41 12 47 17.5C45 22 43.5 25 42.5 27Z"/><path d="M42.5 27C45 16.5 55 17 59.5 28.8C53 23.5 46 23.5 42.5 27Z"/><path d="M42.5 27C48 24 58 31 60 40.5C55 35 48 34 42.5 27Z"/><path d="M52.2 76C53.5 58 62 48 68 43.5L71 45.5C65.5 50.5 57 60 55.6 76Z"/><circle cx="69" cy="44.5" r="2"/><path d="M69 44.5C63 39 56 42 53.5 47C58 46 64 45.5 69 44.5Z"/><path d="M69 44.5C63 32 70 29 76 34.5C74 38.5 72 41.5 69 44.5Z"/><path d="M69 44.5C71 34 81 37 84 46C78.5 41.5 73.5 42.5 69 44.5Z"/><path d="M69 44.5C75 42 85 46 86 54.5C80.5 50 74.5 49.5 69 44.5Z"/><path d="M69 44.5C74 48 79.5 57 75 63C73.5 56 70.5 51.5 69 44.5Z"/></svg>',
+            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tree-palm"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/></svg>',
         ],
     ];
 
@@ -73,9 +76,9 @@
 
     $quickLinks = [
         ['label' => 'Home', 'url' => '#home'],
-        ['label' => 'Rooms & Suites', 'url' => '#rooms'],
-        ['label' => 'Make a Booking', 'url' => '#booking'],
-        ['label' => 'Dining', 'url' => '#dining'],
+        ['label' => 'Rooms & Suites', 'url' => 'rooms.php'],
+        ['label' => 'Make a Booking', 'url' => 'booking.php'],
+        ['label' => 'Dining & Cuisines', 'url' => 'dining.php'],
         ['label' => 'Experiences', 'url' => '#experiences'],
         ['label' => 'Contact Us', 'url' => '#contact'],
     ];
@@ -90,12 +93,37 @@
 
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['check_availability'])) {
-        $checkin = htmlspecialchars($_POST['checkin'] ?? '');
-        $checkout = htmlspecialchars($_POST['checkout'] ?? '');
-        $guests = htmlspecialchars($_POST['guests'] ?? '2');
-        $roomType = htmlspecialchars($_POST['room_type'] ?? 'any');
-        
+        $checkin = sanitize_input($_POST['checkin'] ?? '');
+        $checkout = sanitize_input($_POST['checkout'] ?? '');
+        $guests = (int) ($_POST['guests'] ?? 2);
+        $roomType = sanitize_input($_POST['room_type'] ?? 'any');
+        $allowedRoomTypes = ['any', 'standard', 'deluxe', 'suite'];
+        $checkinDate = DateTime::createFromFormat('Y-m-d', $checkin);
+        $checkoutDate = DateTime::createFromFormat('Y-m-d', $checkout);
+
+        if (
+            !$checkinDate || !$checkoutDate ||
+            $checkinDate->format('Y-m-d') !== $checkin ||
+            $checkoutDate->format('Y-m-d') !== $checkout ||
+            $checkin >= $checkout ||
+            $guests < 1 || $guests > 4 ||
+            !in_array($roomType, $allowedRoomTypes, true)
+        ) {
+            set_flash_message('error', 'Please choose valid check-in, check-out, guest, and room details.');
+            redirect('index.php#booking');
+        }
+
+        $_SESSION['booking_search'] = [
+            'checkin' => $checkin,
+            'checkout' => $checkout,
+            'guests' => $guests,
+            'room_type' => $roomType,
+        ];
+
+        redirect('booking.php');
     }
+
+    $availabilityFlash = get_flash_message();
 ?>
 
 <!-- Navigation bar -->
@@ -114,7 +142,13 @@
             <?php endforeach; ?>
         </ul>
 
-        <a href="#booking" class="btn-book-now">Book Now</a>
+        <a href="booking.php" class="btn-book-now">Book Now</a>
+
+        <?php if (is_logged_in()): ?>
+            <a href="success.php" class="btn-login">My Account</a>
+        <?php else: ?>
+            <a href="info.php" class="btn-login">Login</a>
+        <?php endif; ?>
 
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
             <span></span><span></span><span></span>
@@ -135,6 +169,11 @@
 <!-- Booking bar -->
 <div class="booking-bar-wrapper" id="booking">
     <div class="container">
+        <?php if ($availabilityFlash): ?>
+            <div class="alert alert-<?= htmlspecialchars($availabilityFlash['type']) ?>">
+                <?= htmlspecialchars($availabilityFlash['message']) ?>
+            </div>
+        <?php endif; ?>
         <form class="booking-bar" method="POST" action="">
             <div class="booking-field">
                 <label for="checkin">Check In</label>
@@ -212,7 +251,7 @@
         </div>
 
         <div class="view-all-wrapper">
-            <a href="#" class="btn-view-all">View All Rooms</a>
+            <a href="rooms.php" class="btn-view-all">View All Rooms</a>
         </div>
     </div>
 </section>

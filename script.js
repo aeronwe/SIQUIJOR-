@@ -104,4 +104,326 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // =============================================
+    // BOOKING PAGE LOGIC
+    // =============================================
+    const bookCheckin = document.getElementById('bookCheckin');
+    const bookCheckout = document.getElementById('bookCheckout');
+    const bookAdults = document.getElementById('bookAdults');
+    const bookChildren = document.getElementById('bookChildren');
+    const bookRoomType = document.getElementById('bookRoomType');
+    const summaryRoomImage = document.getElementById('summaryRoomImage');
+    const summaryRoomName = document.getElementById('summaryRoomName');
+    const summaryRoomBadge = document.getElementById('summaryRoomBadge');
+    const summaryDates = document.getElementById('summaryDates');
+    const summaryNightsLabel = document.getElementById('summaryNightsLabel');
+    const summarySubtotal = document.getElementById('summarySubtotal');
+    const summaryTax = document.getElementById('summaryTax');
+    const summaryResortFee = document.getElementById('summaryResortFee');
+    const summaryTotal = document.getElementById('summaryTotal');
+    const summaryGuestsText = document.getElementById('summaryGuestsText');
+    const guestsContainer = document.getElementById('additionalGuestsContainer');
+    const guestsSubtitle = document.getElementById('additionalGuestsSubtitle');
+
+    if (bookCheckin && bookCheckout && bookRoomType) {
+        const todayStr = new Date().toISOString().split('T')[0];
+        bookCheckin.setAttribute('min', todayStr);
+
+        bookCheckin.addEventListener('change', () => {
+            bookCheckout.setAttribute('min', bookCheckin.value);
+            if (bookCheckout.value && bookCheckout.value < bookCheckin.value) {
+                bookCheckout.value = bookCheckin.value;
+            }
+            updateBookingSummary();
+        });
+
+        bookCheckout.addEventListener('change', updateBookingSummary);
+        bookRoomType.addEventListener('change', updateBookingSummary);
+
+        // Listen to guest count changes
+        bookAdults.addEventListener('change', () => {
+            updateAdditionalGuests();
+            updateBookingSummary();
+        });
+        bookChildren.addEventListener('change', () => {
+            updateAdditionalGuests();
+            updateBookingSummary();
+        });
+
+        // Room option list click-to-select
+        const roomOptionItems = document.querySelectorAll('.room-option-item');
+        roomOptionItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                bookRoomType.selectedIndex = index + 1; // +1 because of the disabled placeholder
+                roomOptionItems.forEach(el => el.classList.remove('selected'));
+                item.classList.add('selected');
+                updateBookingSummary();
+            });
+        });
+
+        // ─── Dynamic Additional Guests ───────────────────────────
+        function updateAdditionalGuests() {
+            const adults = parseInt(bookAdults.value) || 1;
+            const children = parseInt(bookChildren.value) || 0;
+            const totalGuests = adults + children;
+            const additionalCount = Math.max(0, totalGuests - 1); // minus the primary guest
+
+            // Save existing values
+            const existingInputs = guestsContainer.querySelectorAll('input[name="additional_guest[]"]');
+            const existingValues = [];
+            existingInputs.forEach(inp => existingValues.push(inp.value));
+
+            // Clear container
+            guestsContainer.innerHTML = '';
+
+            if (additionalCount === 0) {
+                guestsSubtitle.textContent = 'No additional guests needed for this booking.';
+                return;
+            }
+
+            guestsSubtitle.textContent = `Add the names of ${additionalCount} other guest${additionalCount > 1 ? 's' : ''} staying with you.`;
+
+            for (let i = 0; i < additionalCount; i++) {
+                const guestNum = i + 2; // Guest 2, 3, 4, etc.
+                const group = document.createElement('div');
+                group.className = 'booking-field-group additional-guest-field';
+                group.innerHTML = `
+                    <div class="booking-field-outlined">
+                        <label>Guest ${guestNum} of ${totalGuests}</label>
+                        <input type="text" name="additional_guest[]" placeholder="Enter guest's full name" value="${existingValues[i] || ''}">
+                    </div>
+                `;
+                guestsContainer.appendChild(group);
+            }
+        }
+
+        // Initialize additional guests on load
+        updateAdditionalGuests();
+
+        // ─── Update Booking Summary ──────────────────────────────
+        function updateBookingSummary() {
+            const selectedOption = bookRoomType.options[bookRoomType.selectedIndex];
+            const price = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+            const roomName = selectedOption.getAttribute('data-name') || '—';
+            const badge = selectedOption.getAttribute('data-badge') || '—';
+            const image = selectedOption.getAttribute('data-image') || '';
+
+            // Update room info
+            if (summaryRoomName) summaryRoomName.textContent = roomName;
+            if (summaryRoomBadge) summaryRoomBadge.textContent = badge;
+
+            // Update room image
+            if (summaryRoomImage) {
+                if (image) {
+                    summaryRoomImage.innerHTML = `<img src="${image}" alt="${roomName}" loading="lazy">`;
+                } else {
+                    summaryRoomImage.innerHTML = '<span class="summary-room-placeholder">[ Selected Room Image ]</span>';
+                }
+            }
+
+            // Calculate nights
+            let nights = 0;
+            if (bookCheckin.value && bookCheckout.value) {
+                const ci = new Date(bookCheckin.value);
+                const co = new Date(bookCheckout.value);
+                const diff = co - ci;
+                nights = Math.max(0, Math.round(diff / (1000 * 60 * 60 * 24)));
+            }
+
+            // Update dates display
+            if (summaryDates) {
+                if (bookCheckin.value && bookCheckout.value && nights > 0) {
+                    const ciDate = new Date(bookCheckin.value);
+                    const coDate = new Date(bookCheckout.value);
+                    const opts = { month: 'short', day: 'numeric', year: 'numeric' };
+                    summaryDates.innerHTML = `${ciDate.toLocaleDateString('en-US', opts)} – ${coDate.toLocaleDateString('en-US', opts)}<br>${nights} Night${nights > 1 ? 's' : ''}`;
+                } else {
+                    summaryDates.innerHTML = '<span>—</span>';
+                }
+            }
+
+            // Update guests display
+            if (summaryGuestsText) {
+                const adults = parseInt(bookAdults.value) || 1;
+                const children = parseInt(bookChildren.value) || 0;
+                const parts = [];
+                parts.push(`${adults} Adult${adults > 1 ? 's' : ''}`);
+                parts.push(`${children} Child${children !== 1 ? 'ren' : ''}`);
+                summaryGuestsText.textContent = parts.join(', ');
+            }
+
+            // Calculate prices
+            const subtotal = price * nights;
+            const tax = Math.round(subtotal * 0.12);
+            const resortFee = 500;
+            const total = subtotal + tax + resortFee;
+
+            // Format currency
+            const fmt = (n) => '₱' + n.toLocaleString();
+
+            if (summaryNightsLabel) summaryNightsLabel.textContent = `${fmt(price)} × ${nights} night${nights > 1 ? 's' : ''}`;
+            if (summarySubtotal) summarySubtotal.textContent = fmt(subtotal);
+            if (summaryTax) summaryTax.textContent = fmt(tax);
+            if (summaryResortFee) summaryResortFee.textContent = fmt(resortFee);
+            if (summaryTotal) summaryTotal.textContent = fmt(total);
+
+            // Highlight selected room in list
+            const roomOptionItems = document.querySelectorAll('.room-option-item');
+            roomOptionItems.forEach((el, i) => {
+                el.classList.toggle('selected', (bookRoomType.selectedIndex - 1) === i);
+            });
+        }
+
+        // ─── Confirm Booking ─────────────────────────────────────
+        const confirmBtn = document.getElementById('btnConfirmBooking');
+        const modalOverlay = document.getElementById('bookingModalOverlay');
+        const modalDetails = document.getElementById('bookingModalDetails');
+
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', async () => {
+                // Gather all values
+                const fullName = document.getElementById('guestFullName')?.value.trim() || '';
+                const email = document.getElementById('guestEmail')?.value.trim() || '';
+                const phone = document.getElementById('guestPhone')?.value.trim() || '';
+                const paymentMethod = document.querySelector('input[name="payment_method"]:checked')?.value || '';
+                const specialRequests = document.getElementById('specialRequests')?.value.trim() || '';
+
+                const selectedOption = bookRoomType.options[bookRoomType.selectedIndex];
+                const roomName = selectedOption.getAttribute('data-name') || '';
+                const roomPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+
+                const adults = parseInt(bookAdults.value) || 1;
+                const children = parseInt(bookChildren.value) || 0;
+
+                // Collect additional guest names
+                const guestInputs = guestsContainer.querySelectorAll('input[name="additional_guest[]"]');
+                const additionalGuests = [];
+                guestInputs.forEach(inp => {
+                    if (inp.value.trim()) additionalGuests.push(inp.value.trim());
+                });
+
+                // ── Client-side validation ──
+                const errors = [];
+                if (!bookCheckin.value) errors.push('Please select a check-in date.');
+                if (!bookCheckout.value) errors.push('Please select a check-out date.');
+                if (bookCheckin.value && bookCheckout.value && bookCheckin.value >= bookCheckout.value) {
+                    errors.push('Check-out must be after check-in.');
+                }
+                if (!roomName) errors.push('Please select a room type.');
+                if (!fullName) errors.push('Please enter your full name.');
+                if (!email) errors.push('Please enter your email address.');
+                if (!phone) errors.push('Please enter your phone number.');
+
+                // Validate additional guests have names filled
+                const expectedAdditional = (adults + children) - 1;
+                if (expectedAdditional > 0) {
+                    const filledGuests = additionalGuests.length;
+                    if (filledGuests < expectedAdditional) {
+                        errors.push(`Please fill in the names of all ${expectedAdditional} additional guest${expectedAdditional > 1 ? 's' : ''}.`);
+                    }
+                }
+
+                if (errors.length > 0) {
+                    alert(errors.join('\n'));
+                    return;
+                }
+
+                // ── Calculate total ──
+                let nights = 0;
+                if (bookCheckin.value && bookCheckout.value) {
+                    const ci = new Date(bookCheckin.value);
+                    const co = new Date(bookCheckout.value);
+                    nights = Math.max(0, Math.round((co - ci) / (1000 * 60 * 60 * 24)));
+                }
+                const subtotal = roomPrice * nights;
+                const tax = Math.round(subtotal * 0.12);
+                const resortFee = 500;
+                const total = subtotal + tax + resortFee;
+
+                // ── Submit to server ──
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = 'Processing...';
+
+                try {
+                    const response = await fetch('process_booking.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            full_name: fullName,
+                            email: email,
+                            phone: phone,
+                            room_type: roomName,
+                            checkin_date: bookCheckin.value,
+                            checkout_date: bookCheckout.value,
+                            adults: adults,
+                            children: children,
+                            additional_guests: additionalGuests,
+                            payment_method: paymentMethod,
+                            special_requests: specialRequests,
+                            total_amount: total,
+                        }),
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Show confirmation modal
+                        const fmt = (n) => '₱' + n.toLocaleString();
+                        const ciDate = new Date(bookCheckin.value);
+                        const coDate = new Date(bookCheckout.value);
+                        const dateOpts = { month: 'short', day: 'numeric', year: 'numeric' };
+
+                        if (modalDetails) {
+                            modalDetails.innerHTML = `
+                                <div class="modal-detail-row">
+                                    <span class="modal-detail-label">Reservation ID</span>
+                                    <span class="modal-detail-value">#${data.reservation_id}</span>
+                                </div>
+                                <div class="modal-detail-row">
+                                    <span class="modal-detail-label">Room</span>
+                                    <span class="modal-detail-value">${roomName}</span>
+                                </div>
+                                <div class="modal-detail-row">
+                                    <span class="modal-detail-label">Dates</span>
+                                    <span class="modal-detail-value">${ciDate.toLocaleDateString('en-US', dateOpts)} – ${coDate.toLocaleDateString('en-US', dateOpts)}</span>
+                                </div>
+                                <div class="modal-detail-row">
+                                    <span class="modal-detail-label">Guests</span>
+                                    <span class="modal-detail-value">${adults} Adult${adults > 1 ? 's' : ''}, ${children} Child${children !== 1 ? 'ren' : ''}</span>
+                                </div>
+                                <div class="modal-detail-row modal-detail-total">
+                                    <span class="modal-detail-label">Total</span>
+                                    <span class="modal-detail-value">${fmt(total)}</span>
+                                </div>
+                            `;
+                        }
+
+                        if (modalOverlay) {
+                            modalOverlay.classList.add('active');
+                            document.body.style.overflow = 'hidden';
+                        }
+                    } else {
+                        alert(data.message || 'Something went wrong. Please try again.');
+                    }
+                } catch (err) {
+                    alert('Network error. Please check your connection and try again.');
+                } finally {
+                    confirmBtn.disabled = false;
+                    confirmBtn.innerHTML = 'Confirm Booking &rarr;';
+                }
+            });
+        }
+
+        // Close modal on overlay click
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    modalOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+    }
 });
+
