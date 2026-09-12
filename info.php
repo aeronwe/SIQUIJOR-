@@ -131,7 +131,7 @@ $flash = get_flash_message();
             </form>
 
             <div class="auth-footer">
-                <p>Don't have an account? <a href="student.php?redirect=<?= urlencode($redirect_after_login) ?>" class="auth-link">Sign Up</a></p>
+                <p>Don't have an account? <a href="Signup.php?redirect=<?= urlencode($redirect_after_login) ?>" class="auth-link">Sign Up</a></p>
                 <p><a href="index.php" class="auth-link-secondary">← Back to Homepage</a></p>
             </div>
         </div>

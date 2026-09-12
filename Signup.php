@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             <?php endif; ?>
 
-            <form class="auth-form" method="POST" action="student.php?redirect=<?= urlencode($redirect_after_signup) ?>" id="signupForm">
+            <form class="auth-form" method="POST" action="Signup.php?redirect=<?= urlencode($redirect_after_signup) ?>" id="signupForm">
                 <div class="form-row">
                     <div class="form-group form-group-half">
                         <label for="first_name" class="form-label">First Name</label>
