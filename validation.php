@@ -2,12 +2,6 @@
 function validate_signup($first_name, $last_name, $email, $password, $confirm_password) {
     $errors = [];
 
-    // First name
-=======
-function validate_signup($first_name, $last_name, $email, $password, $confirm_password) {
-    $errors = [];
-
->>>>>>> b4acaedd48d94f3fe06f401dfb3692e53e9009fb
     if (empty($first_name)) {
         $errors[] = "First name is required.";
     } elseif (strlen($first_name) > 50) {
