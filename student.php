@@ -1,16 +1,8 @@
 <?php
-// =============================================================
-// Signup / Registration Page
-// File: student.php
-// Description: Displays the signup form and processes new user
-//              registration. Uses password_hash() to securely
-//              store passwords. Checks for duplicate emails.
-// =============================================================
 
 require_once __DIR__ . '/function.php';
 require_once __DIR__ . '/validation.php';
 
-// If already logged in, go to dashboard
 if (is_logged_in()) {
     redirect('success.php');
 }
@@ -26,19 +18,15 @@ $last_name  = '';
 $email      = '';
 $pdo        = getConnection();
 
-// ── Process Signup Form ──
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitize inputs
     $first_name       = sanitize_input($_POST['first_name'] ?? '');
     $last_name        = sanitize_input($_POST['last_name'] ?? '');
     $email            = sanitize_input($_POST['email'] ?? '');
-    $password         = $_POST['password'] ?? '';          // Don't sanitize passwords
+    $password         = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
 
-    // Validate inputs
     $errors = validate_signup($first_name, $last_name, $email, $password, $confirm_password);
 
-    // Check for duplicate email
     if (empty($errors)) {
         $existing_user = get_user_by_email($pdo, $email);
         if ($existing_user) {
@@ -46,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Create user if no errors
     if (empty($errors)) {
         $success = create_user($pdo, $first_name, $last_name, $email, $password);
 
@@ -73,7 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-<!-- Navigation -->
 <nav class="navbar">
     <div class="navbar-inner">
         <a href="index.php" class="navbar-brand">
@@ -93,7 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </nav>
 
-<!-- Auth Section -->
 <section class="auth-page">
     <div class="auth-container">
         <div class="auth-card">

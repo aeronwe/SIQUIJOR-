@@ -1,16 +1,8 @@
 <?php
-// =============================================================
-// Dashboard / Success Page
-// File: success.php
-// Description: Protected page shown after login. Displays user
-//              profile info with Update and Delete functionality.
-//              Only accessible when logged in.
-// =============================================================
 
 require_once __DIR__ . '/function.php';
 require_once __DIR__ . '/validation.php';
 
-// Redirect to login if not authenticated
 if (!is_logged_in()) {
     set_flash_message('error', 'Please log in to access this page.');
     redirect('info.php');
@@ -21,14 +13,11 @@ $errors  = [];
 $success_msg = '';
 $pdo = getConnection();
 
-// ── Handle DELETE Account ──
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_account'])) {
     $result = delete_user($pdo, $user_id);
 
     if ($result) {
-        // Destroy session and redirect
         session_destroy();
-        // Start new session to set flash message
         session_start();
         set_flash_message('success', 'Your account has been deleted.');
         redirect('info.php');
@@ -37,26 +26,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_account'])) {
     }
 }
 
-// ── Handle UPDATE Profile ──
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     $first_name = sanitize_input($_POST['first_name'] ?? '');
     $last_name  = sanitize_input($_POST['last_name'] ?? '');
     $email      = sanitize_input($_POST['email'] ?? '');
 
-    // Validate
     $errors = validate_update($first_name, $last_name, $email);
 
-    // Check if email is taken by another user
     if (empty($errors) && is_email_taken($pdo, $email, $user_id)) {
         $errors[] = "This email is already used by another account.";
     }
 
-    // Update if no errors
     if (empty($errors)) {
         $result = update_user($pdo, $user_id, $first_name, $last_name, $email);
 
         if ($result) {
-            // Update session data
             $_SESSION['user_name']  = $first_name . ' ' . $last_name;
             $_SESSION['user_email'] = $email;
             $success_msg = "Profile updated successfully!";
@@ -66,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     }
 }
 
-// ── Handle LOGOUT ──
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     session_destroy();
     session_start();
@@ -74,18 +57,15 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     redirect('info.php');
 }
 
-// Fetch current user data from database
 $user = get_user_by_id($pdo, $user_id);
 
 if (!$user) {
-    // User no longer exists in DB
     session_destroy();
     session_start();
     set_flash_message('error', 'Account not found. Please log in again.');
     redirect('info.php');
 }
 
-// Get flash message
 $flash = get_flash_message();
 ?>
 <!DOCTYPE html>
@@ -102,7 +82,6 @@ $flash = get_flash_message();
 </head>
 <body>
 
-<!-- Navigation -->
 <nav class="navbar">
     <div class="navbar-inner">
         <a href="index.php" class="navbar-brand">
@@ -125,12 +104,10 @@ $flash = get_flash_message();
     </div>
 </nav>
 
-<!-- Dashboard Section -->
 <section class="auth-page">
     <div class="auth-container">
         <div class="dashboard-card">
 
-            <!-- Welcome Header -->
             <div class="dashboard-header">
                 <div class="dashboard-avatar">
                     <?= strtoupper(substr($user['first_name'], 0, 1) . substr($user['last_name'], 0, 1)) ?>
@@ -161,7 +138,6 @@ $flash = get_flash_message();
                 </div>
             <?php endif; ?>
 
-            <!-- User Info Card -->
             <div class="user-info-card">
                 <h2 class="user-info-heading">Account Information</h2>
                 <div class="user-info-grid">
@@ -184,7 +160,6 @@ $flash = get_flash_message();
                 </div>
             </div>
 
-            <!-- Update Profile Form -->
             <div class="profile-section">
                 <h2 class="profile-section-title">Update Profile</h2>
                 <form class="auth-form" method="POST" action="success.php" id="updateForm">
@@ -229,7 +204,6 @@ $flash = get_flash_message();
                 </form>
             </div>
 
-            <!-- Danger Zone -->
             <div class="danger-zone">
                 <h2 class="danger-zone-title">Danger Zone</h2>
                 <p class="danger-zone-text">Deleting your account is permanent and cannot be undone.</p>
@@ -240,7 +214,6 @@ $flash = get_flash_message();
                 </form>
             </div>
 
-            <!-- Actions -->
             <div class="dashboard-actions">
                 <a href="index.php" class="btn-auth btn-secondary">← Back to Homepage</a>
                 <a href="success.php?action=logout" class="btn-auth btn-outline">Logout</a>

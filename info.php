@@ -1,16 +1,8 @@
 <?php
-// =============================================================
-// Login Page
-// File: info.php
-// Description: Displays the login form and processes login
-//              attempts. Uses password_verify() to check
-//              credentials against the database.
-// =============================================================
 
 require_once __DIR__ . '/function.php';
 require_once __DIR__ . '/validation.php';
 
-// If already logged in, go to dashboard
 if (is_logged_in()) {
     redirect('success.php');
 }
@@ -24,22 +16,17 @@ $errors = [];
 $email  = '';
 $pdo    = getConnection();
 
-// ── Process Login Form ──
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitize inputs
     $email    = sanitize_input($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';  // Don't sanitize password (hashing handles it)
+    $password = $_POST['password'] ?? '';
 
-    // Validate inputs
     $errors = validate_login($email, $password);
 
-    // If no validation errors, check credentials
     if (empty($errors)) {
         $user = get_user_by_email($pdo, $email);
 
         if ($user && password_verify($password, $user['password'])) {
-            // Login successful — set session
-            session_regenerate_id(true);  // Prevent session fixation
+            session_regenerate_id(true);
             $_SESSION['user_id']    = $user['id'];
             $_SESSION['user_name']  = $user['first_name'] . ' ' . $user['last_name'];
             $_SESSION['user_email'] = $user['email'];
@@ -52,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Get flash message (e.g. from successful registration)
 $flash = get_flash_message();
 ?>
 <!DOCTYPE html>
@@ -69,7 +55,6 @@ $flash = get_flash_message();
 </head>
 <body>
 
-<!-- Navigation -->
 <nav class="navbar">
     <div class="navbar-inner">
         <a href="index.php" class="navbar-brand">
@@ -89,7 +74,6 @@ $flash = get_flash_message();
     </div>
 </nav>
 
-<!-- Auth Section -->
 <section class="auth-page">
     <div class="auth-container">
         <div class="auth-card">
