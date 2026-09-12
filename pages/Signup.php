@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/function.php';
-require_once __DIR__ . '/validation.php';
+require_once __DIR__ . '/../functions&val/function.php';
+require_once __DIR__ . '/../functions&val/validation.php';
 
 if (is_logged_in()) {
     redirect('success.php');
@@ -56,24 +56,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
 <nav class="navbar">
     <div class="navbar-inner">
-        <a href="index.php" class="navbar-brand">
+        <a href="../index.php" class="navbar-brand">
             <div class="brand-icon customizable-logo">
-                <img src="assets/images/LGO.svg" alt="Ejercito's Sunscape Resort logo">
+                <img src="../assets/images/LGO.svg" alt="Ejercito's Sunscape Resort logo">
             </div>
             <span class="brand-text">Ejercito's Sunscape Resort</span>
         </a>
         <ul class="navbar-links">
-            <li><a href="index.php">Home</a></li>
-            <li><a href="index.php#rooms">Rooms</a></li>
-            <li><a href="index.php#booking">Booking</a></li>
-            <li><a href="index.php#dining">Dining</a></li>
-            <li><a href="index.php#contact">Contact</a></li>
+            <li><a href="../index.php">Home</a></li>
+            <li><a href="../index.php#rooms">Rooms</a></li>
+            <li><a href="../index.php#booking">Booking</a></li>
+            <li><a href="../index.php#dining">Dining</a></li>
+            <li><a href="../index.php#contact">Contact</a></li>
         </ul>
         <a href="info.php" class="btn-login">Login</a>
     </div>
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="auth-container">
         <div class="auth-card">
             <div class="auth-header">
-                <img src="assets/images/LGO.svg" alt="Resort Logo" class="auth-logo">
+                <img src="../assets/images/LGO.svg" alt="Resort Logo" class="auth-logo">
                 <h1 class="auth-title">Create Account</h1>
                 <p class="auth-subtitle">Join us for the island experience</p>
             </div>
@@ -172,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="auth-footer">
                 <p>Already have an account? <a href="info.php?redirect=<?= urlencode($redirect_after_signup) ?>" class="auth-link">Sign In</a></p>
-                <p><a href="index.php" class="auth-link-secondary">← Back to Homepage</a></p>
+                <p><a href="../index.php" class="auth-link-secondary">← Back to Homepage</a></p>
             </div>
         </div>
     </div>

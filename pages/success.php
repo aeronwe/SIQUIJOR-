@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/function.php';
-require_once __DIR__ . '/validation.php';
+require_once __DIR__ . '/../functions&val/function.php';
+require_once __DIR__ . '/../functions&val/validation.php';
 
 if (!is_logged_in()) {
     set_flash_message('error', 'Please log in to access this page.');
@@ -78,24 +78,24 @@ $flash = get_flash_message();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
 <nav class="navbar">
     <div class="navbar-inner">
-        <a href="index.php" class="navbar-brand">
+        <a href="../index.php" class="navbar-brand">
             <div class="brand-icon customizable-logo">
-                <img src="assets/images/LGO.svg" alt="Ejercito's Sunscape Resort logo">
+                <img src="../assets/images/LGO.svg" alt="Ejercito's Sunscape Resort logo">
             </div>
             <span class="brand-text">Ejercito's Sunscape Resort</span>
         </a>
         <ul class="navbar-links">
-            <li><a href="index.php">Home</a></li>
-            <li><a href="index.php#rooms">Rooms</a></li>
-            <li><a href="index.php#booking">Booking</a></li>
-            <li><a href="index.php#dining">Dining</a></li>
-            <li><a href="index.php#contact">Contact</a></li>
+            <li><a href="../index.php">Home</a></li>
+            <li><a href="../index.php#rooms">Rooms</a></li>
+            <li><a href="../index.php#booking">Booking</a></li>
+            <li><a href="../index.php#dining">Dining</a></li>
+            <li><a href="../index.php#contact">Contact</a></li>
         </ul>
         <div class="nav-user-actions">
             <span class="nav-user-greeting">Hi, <?= htmlspecialchars($user['first_name']) ?></span>
@@ -215,7 +215,7 @@ $flash = get_flash_message();
             </div>
 
             <div class="dashboard-actions">
-                <a href="index.php" class="btn-auth btn-secondary">← Back to Homepage</a>
+                <a href="../index.php" class="btn-auth btn-secondary">← Back to Homepage</a>
                 <a href="success.php?action=logout" class="btn-auth btn-outline">Logout</a>
             </div>
 

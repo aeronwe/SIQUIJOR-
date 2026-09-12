@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 confirmBtn.textContent = 'Processing...';
 
                 try {
-                    const response = await fetch('process_booking.php', {
+                    const response = await fetch('../api/process_booking.php', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({

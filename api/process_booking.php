@@ -1,13 +1,6 @@
 <?php
-// =============================================================
-// Process Booking
-// File: process_booking.php
-// Description: Server-side handler for booking form submission.
-//              Validates input, saves reservation to DB,
-//              returns JSON response.
-// =============================================================
 
-require_once __DIR__ . '/function.php';
+require_once __DIR__ . '/../functions&val/function.php';
 
 header('Content-Type: application/json');
 

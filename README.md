@@ -1,1 +1,1 @@
-My basic website for our school project.
+My basic website for our school project. & Para sa resume

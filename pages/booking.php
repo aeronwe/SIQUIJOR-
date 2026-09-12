@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/function.php';
+require_once __DIR__ . '/../functions&val/function.php';
 
 if (!is_logged_in()) {
     set_flash_message('error', 'Please log in or create an account before making a booking.');
@@ -11,9 +11,9 @@ $resortName = "Ejercito's Sunscape Resort";
 $roomTypes = [
     ['name' => 'Standard Twin Room',   'badge' => 'Standard', 'price' => 3200,  'image' => 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80'],
     ['name' => 'Deluxe Garden View',   'badge' => 'Deluxe',   'price' => 4500,  'image' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80'],
-    ['name' => 'Premier Ocean Suite',  'badge' => 'Suite',    'price' => 8200,  'image' => 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80'],
-    ['name' => 'Family Beach Villa',   'badge' => 'Villa',    'price' => 12500, 'image' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80'],
-    ['name' => 'Honeymoon Paradise Suite', 'badge' => 'Premium', 'price' => 15000, 'image' => 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80'],
+    ['name' => 'Premier Ocean Suite',  'badge' => 'Suite',    'price' => 8200,  'image' => 'https://a0.muscache.com/im/pictures/hosting/Hosting-22680436/original/42f1ab5b-f7fb-4287-ba13-e34f1758563d.jpeg?im_w=1200'],
+    ['name' => 'Family Beach Villa',   'badge' => 'Villa',    'price' => 12500, 'image' => 'https://images.squarespace-cdn.com/content/v1/5b4f0c8d89c17294e53d4ffc/1532678056046-2I393HL258IGMVG5LB7Z/351bbf9b32ea226d4294d111dad38ed0.jpg?format=2500w'],
+    ['name' => 'Honeymoon Paradise Suite', 'badge' => 'Premium', 'price' => 15000, 'image' => 'https://media.cntraveller.com/photos/611bf43e69410e829d87eb1a/16:9/w_1920,c_limit/pangulasian_cnt_17sept12_pr.jpg'],
 ];
 
 $bookingSearch = $_SESSION['booking_search'] ?? [];
@@ -34,14 +34,14 @@ $roomTypeIndex = array_search($prefillRoomType, ['standard', 'deluxe', 'suite'],
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body class="inner-page">
 <nav class="navbar">
     <div class="navbar-inner">
-        <a href="index.php" class="navbar-brand"><div class="brand-icon customizable-logo"><img src="assets/images/LGO.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></div><span class="brand-text"><?= htmlspecialchars($resortName) ?></span></a>
+        <a href="../index.php" class="navbar-brand"><div class="brand-icon customizable-logo"><img src="../assets/images/LGO.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></div><span class="brand-text"><?= htmlspecialchars($resortName) ?></span></a>
         <ul class="navbar-links">
-            <li><a href="index.php">Home</a></li><li><a href="rooms.php">Rooms</a></li><li><a href="booking.php" class="active">Booking</a></li><li><a href="dining.php">Dining</a></li><li><a href="index.php#experiences">Experiences</a></li><li><a href="index.php#contact">Contact</a></li>
+            <li><a href="../index.php">Home</a></li><li><a href="rooms.php">Rooms</a></li><li><a href="booking.php" class="active">Booking</a></li><li><a href="dining.php">Dining</a></li><li><a href="../index.php#experiences">Experiences</a></li><li><a href="../index.php#contact">Contact</a></li>
         </ul>
         <a href="booking.php" class="btn-book-now">Book Now</a>
         <?php if (is_logged_in()): ?><a href="success.php" class="btn-login">My Account</a><?php else: ?><a href="info.php" class="btn-login">Login</a><?php endif; ?>
@@ -54,7 +54,7 @@ $roomTypeIndex = array_search($prefillRoomType, ['standard', 'deluxe', 'suite'],
     <section class="booking-page-header">
         <div class="container">
             <h1>Make a Reservation</h1>
-            <p class="booking-breadcrumb"><a href="index.php">Home</a> &gt; Booking</p>
+            <p class="booking-breadcrumb"><a href="../index.php">Home</a> &gt; Booking</p>
         </div>
     </section>
 
@@ -280,7 +280,7 @@ $roomTypeIndex = array_search($prefillRoomType, ['standard', 'deluxe', 'suite'],
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
                 Browse El Juwan Dining
             </a>
-            <a href="index.php" class="btn-modal-home" id="btnModalHome">Back to Home</a>
+            <a href="../index.php" class="btn-modal-home" id="btnModalHome">Back to Home</a>
         </div>
     </div>
 </div>
@@ -288,13 +288,13 @@ $roomTypeIndex = array_search($prefillRoomType, ['standard', 'deluxe', 'suite'],
 <footer class="footer inner-footer" id="contact">
     <div class="container">
         <div class="footer-grid">
-            <div class="footer-brand-block"><div class="footer-brand-header"><span class="footer-brand-icon"><img src="assets/images/LGO2.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></span></div><div class="footer-brand-name"><?= htmlspecialchars($resortName) ?></div><p class="footer-tagline">"Where the sun meets the shore..."</p><div class="footer-contact">Purok 7, Brgy. San Isidro, Siquijor, Philippines<br>+63 912 345 6789<br>reservations@ejercitosunscape.ph</div></div>
-            <div><h4 class="footer-heading">Quick Links</h4><ul class="footer-links"><li><a href="index.php">Home</a></li><li><a href="rooms.php">Rooms &amp; Suites</a></li><li><a href="booking.php">Make a Booking</a></li><li><a href="dining.php">Dining</a></li><li><a href="index.php#experiences">Experiences</a></li><li><a href="index.php#contact">Contact Us</a></li></ul></div>
+            <div class="footer-brand-block"><div class="footer-brand-header"><span class="footer-brand-icon"><img src="../assets/images/LGO2.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></span></div><div class="footer-brand-name"><?= htmlspecialchars($resortName) ?></div><p class="footer-tagline">"Where the sun meets the shore..."</p><div class="footer-contact">Purok 7, Brgy. San Isidro, Siquijor, Philippines<br>+63 912 345 6789<br>reservations@ejercitosunscape.ph</div></div>
+            <div><h4 class="footer-heading">Quick Links</h4><ul class="footer-links"><li><a href="../index.php">Home</a></li><li><a href="rooms.php">Rooms &amp; Suites</a></li><li><a href="booking.php">Make a Booking</a></li><li><a href="dining.php">Dining</a></li><li><a href="../index.php#experiences">Experiences</a></li><li><a href="../index.php#contact">Contact Us</a></li></ul></div>
             <div><h4 class="footer-heading">Follow Us</h4><ul class="footer-links"><li><a href="#">facebook.com/EjercitoSunscapeResort</a></li><li><a href="#">@ejercitosunscape</a></li><li><a href="#">@sunscaperesort</a></li></ul></div>
         </div>
         <div class="footer-bottom"><p>&copy; <?= date('Y') ?> <?= htmlspecialchars($resortName) ?>. All rights reserved.</p></div>
     </div>
 </footer>
-<script src="script.js"></script>
+<script src="../script.js"></script>
 </body>
 </html>

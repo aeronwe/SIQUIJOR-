@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/function.php';
+require_once __DIR__ . '/functions&val/function.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,11 +22,11 @@ require_once __DIR__ . '/function.php';
 
     $navLinks = [
         ['label' => 'Home', 'url' => '#home'],
-        ['label' => 'Rooms', 'url' => 'rooms.php'],
-        ['label' => 'Booking', 'url' => 'booking.php'],
-        ['label' => 'Dining', 'url' => 'dining.php'],
-        ['label' => 'Experiences', 'url' => '#experiences'],
-        ['label' => 'Contact', 'url' => '#contact'],
+        ['label' => 'Rooms', 'url' => 'pages/rooms.php'],
+        ['label' => 'Booking', 'url' => 'pages/booking.php'],
+        ['label' => 'Dining', 'url' => 'pages/dining.php'],
+        ['label' => 'Experiences', 'url' => 'pages/experiences.php'],
+        ['label' => 'Contact', 'url' => 'pages/contact.php'],
     ];
 
     $features = [
@@ -120,7 +120,7 @@ require_once __DIR__ . '/function.php';
             'room_type' => $roomType,
         ];
 
-        redirect('booking.php');
+        redirect('pages/booking.php');
     }
 
     $availabilityFlash = get_flash_message();
@@ -142,12 +142,12 @@ require_once __DIR__ . '/function.php';
             <?php endforeach; ?>
         </ul>
 
-        <a href="booking.php" class="btn-book-now">Book Now</a>
+        <a href="pages/booking.php" class="btn-book-now">Book Now</a>
 
         <?php if (is_logged_in()): ?>
-            <a href="success.php" class="btn-login">My Account</a>
+            <a href="pages/success.php" class="btn-login">My Account</a>
         <?php else: ?>
-            <a href="info.php" class="btn-login">Login</a>
+            <a href="pages/info.php" class="btn-login">Login</a>
         <?php endif; ?>
 
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
@@ -244,7 +244,6 @@ require_once __DIR__ . '/function.php';
                         <h3 class="room-name"><?= htmlspecialchars($room['name']) ?></h3>
                         <p class="room-specs"><?= htmlspecialchars($room['specs']) ?></p>
                         <p class="room-price"><?= $room['price'] ?> <span>/ night</span></p>
-                        <button class="btn-view-details" onclick="window.location.href='#'">View Details &rarr;</button>
                     </div>
                 </div>
             <?php endforeach; ?>
