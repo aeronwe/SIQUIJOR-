@@ -250,7 +250,7 @@ require_once __DIR__ . '/functions&val/function.php';
         </div>
 
         <div class="view-all-wrapper">
-            <a href="rooms.php" class="btn-view-all">View All Rooms</a>
+            <a href="pages/rooms.php" class="btn-view-all">View All Rooms</a>
         </div>
     </div>
 </section>
