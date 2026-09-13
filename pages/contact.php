@@ -107,35 +107,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_message'])) {
                 <!-- Right: Contact Info Cards -->
                 <div class="contact-info-column">
                     <div class="contact-info-card">
-                        <span class="contact-info-icon">📍</span>
+                        <span class="contact-info-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-check-inside"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><path d="m9 10 2 2 4-4"/></svg>
+                        </span>
                         <div>
                             <h4 class="contact-info-label">Address</h4>
-                            <p>Purok 7, Brgy. San Isidro, Siquijor, Philippines</p>
+                            <p>Tambisan, Siquijor, Philippines</p>
                         </div>
                     </div>
                     <div class="contact-info-card">
-                        <span class="contact-info-icon">📞</span>
+                        <span class="contact-info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>
+                    </span>
                         <div>
                             <h4 class="contact-info-label">Phone</h4>
                             <p>+63 912 345 6789</p>
                         </div>
                     </div>
                     <div class="contact-info-card">
-                        <span class="contact-info-icon">📧</span>
+                        <span class="contact-info-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+                        </span>
                         <div>
                             <h4 class="contact-info-label">Email</h4>
                             <p>reservations@ejercitosunscape.ph</p>
                         </div>
                     </div>
                     <div class="contact-info-card">
-                        <span class="contact-info-icon">🌐</span>
+                        <span class="contact-info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                    </span>
                         <div>
                             <h4 class="contact-info-label">Website</h4>
                             <p>www.ejercitosunscape.ph</p>
                         </div>
                     </div>
                     <div class="contact-info-card">
-                        <span class="contact-info-icon">🕐</span>
+                        <span class="contact-info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-4"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    </span>
                         <div>
                             <h4 class="contact-info-label">Hours</h4>
                             <p>Front Desk: 24/7<br>Reservations: 8:00 AM – 8:00 PM</p>
@@ -144,11 +151,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_message'])) {
 
                     <!-- Social -->
                     <div class="contact-social-row">
-                        <span class="booking-field-label">Follow Us on Social</span>
+                        <span class="booking-field-label">Follow Us on Social Media</span>
                         <div class="contact-social-buttons">
-                            <a href="#" class="contact-social-btn">FB</a>
-                            <a href="#" class="contact-social-btn">IG</a>
-                            <a href="#" class="contact-social-btn">TK</a>
+                            <a href="#" class="contact-social-btn">
+                                <img src="https://s.magecdn.com/social/mb-facebook.svg" 
+                                alt="Facebook">
+                            </a>
+                            <a href="#" class="contact-social-btn">
+                                <img src="https://s.magecdn.com/social/mb-instagram.svg"
+                                alt="Instagram">
+                            </a>
+                            <a href="#" class="contact-social-btn">
+                                <img src="https://s.magecdn.com/social/mb-tiktok.svg"
+                                alt="TikTok">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -157,18 +173,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_message'])) {
     </section>
 
     <!-- Maps Section -->
-    <section class="contact-map-section">
-        <div class="container">
-            <h2 class="rd-section-heading" style="margin-top:0;">Maps</h2>
-            <div class="contact-map-wrap">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63146.98089456829!2d123.47969024863283!3d9.196684100000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33ab1c8d26beeb3f%3A0x498e5cd6afe3ae0e!2sSiquijor%2C%20Siquijor%2C%20Philippines!5e0!3m2!1sen!2s!4v1693000000000!5m2!1sen!2s"
-                    width="100%" height="400" style="border:0; border-radius: var(--radius-lg);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
+   <section class="contact-map-section">
+    <div class="container">
+        <h2 class="rd-section-heading" style="margin-top:0;">Maps</h2>
+        <div class="contact-map-wrap">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15754.606290525586!2d123.45367115551537!3d9.185867986727734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33ab3fe766a49e27%3A0xda0a4b9097c5ed6a!2sTambisan%2C%20San%20Juan%2C%20Siquijor!5e0!3m2!1sen!2sph!4v1789272815421!5m2!1sen!2sph"
+                width="100%" 
+                height="400" 
+                style="border:0; border-radius: var(--radius-lg);" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div>
-    </section>
-</main>
+    </div>
+</section>
 
 <footer class="footer inner-footer">
     <div class="container">

@@ -2109,8 +2109,8 @@ img {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: var(--color-forest);
-    color: var(--color-cream);
+    background: transparent;
+    color: var(--color-forest-dark);
     border-radius: var(--radius-sm);
     font-family: var(--font-body);
     font-size: 0.75rem;
@@ -2118,6 +2118,15 @@ img {
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
 }
+
+.contact-social-btn img {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 .contact-social-btn:hover {
     background: var(--color-gold);
@@ -2988,6 +2997,7 @@ img {
 .dashboard-actions .btn-auth {
     flex: 1;
 }
+
 
 /*    AUTH RESPONSIVE */
 @media (max-width: 768px) {

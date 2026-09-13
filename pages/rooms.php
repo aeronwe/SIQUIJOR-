@@ -127,8 +127,8 @@ $hasFilters = $selectedType !== 'all' || $selectedPrice !== 'all' || $selectedGu
             <li><a href="rooms.php" class="active">Rooms</a></li>
             <li><a href="booking.php">Booking</a></li>
             <li><a href="dining.php">Dining</a></li>
-            <li><a href="../index.php#experiences">Experiences</a></li>
-            <li><a href="../index.php#contact">Contact</a></li>
+            <li><a href="experiences.php">Experiences</a></li>
+            <li><a href="contact.php">Contact</a></li>
         </ul>
         <a href="booking.php" class="btn-book-now">Book Now</a>
         <?php if (is_logged_in()): ?>

@@ -60,9 +60,17 @@ $amenities = [
 <body class="inner-page">
 <nav class="navbar">
     <div class="navbar-inner">
-        <a href="../index.php" class="navbar-brand"><div class="brand-icon customizable-logo"><img src="../assets/images/LGO.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></div><span class="brand-text"><?= htmlspecialchars($resortName) ?></span></a>
+        <a href="../index.php" class="navbar-brand">
+            <div class="brand-icon customizable-logo"><img src="../assets/images/LGO.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></div>
+            <span class="brand-text"><?= htmlspecialchars($resortName) ?></span>
+        </a>
         <ul class="navbar-links">
-            <li><a href="../index.php">Home</a></li><li><a href="rooms.php">Rooms</a></li><li><a href="booking.php">Booking</a></li><li><a href="dining.php">Dining</a></li><li><a href="experiences.php" class="active">Experiences</a></li><li><a href="contact.php">Contact</a></li>
+            <li><a href="../index.php">Home</a></li>
+            <li><a href="rooms.php">Rooms</a></li>
+            <li><a href="booking.php">Booking</a></li>
+            <li><a href="dining.php">Dining</a></li>
+            <li><a href="experiences.php" class="active">Experiences</a></li>
+            <li><a href="contact.php">Contact</a></li>
         </ul>
         <a href="booking.php" class="btn-book-now">Book Now</a>
         <?php if (is_logged_in()): ?><a href="success.php" class="btn-login">My Account</a><?php else: ?><a href="info.php" class="btn-login">Login</a><?php endif; ?>
@@ -74,7 +82,7 @@ $amenities = [
     <section class="inner-hero">
         <p class="section-label">Island Activities</p>
         <h1>Experiences &amp; Activities</h1>
-        <p>Discover the magic of Siquijor — adventures and memories for every kind of traveler.</p>
+        <p>Discover the magic of Siquijor adventures and memories for every kind of traveler.</p>
     </section>
 
     <!-- Curated Experiences -->

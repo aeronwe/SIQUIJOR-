@@ -65,10 +65,11 @@ $flash = get_flash_message();
         </a>
         <ul class="navbar-links">
             <li><a href="../index.php">Home</a></li>
-            <li><a href="../index.php#rooms">Rooms</a></li>
-            <li><a href="../index.php#booking">Booking</a></li>
-            <li><a href="../index.php#dining">Dining</a></li>
-            <li><a href="../index.php#contact">Contact</a></li>
+            <li><a href="rooms.php">Rooms</a></li>
+            <li><a href="booking.php">Booking</a></li>
+            <li><a href="dining.php">Dining</a></li>
+            <li><a href="experiences.php">Experiences</a></li>
+            <li><a href="contact.php">Contact</a></li>
         </ul>
         <a href="info.php" class="btn-login active">Login</a>
     </div>

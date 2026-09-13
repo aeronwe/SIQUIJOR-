@@ -39,9 +39,17 @@ $roomTypeIndex = array_search($prefillRoomType, ['standard', 'deluxe', 'suite'],
 <body class="inner-page">
 <nav class="navbar">
     <div class="navbar-inner">
-        <a href="../index.php" class="navbar-brand"><div class="brand-icon customizable-logo"><img src="../assets/images/LGO.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></div><span class="brand-text"><?= htmlspecialchars($resortName) ?></span></a>
+        <a href="../index.php" class="navbar-brand">
+            <div class="brand-icon customizable-logo"><img src="../assets/images/LGO.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></div>
+            <span class="brand-text"><?= htmlspecialchars($resortName) ?></span>
+        </a>
         <ul class="navbar-links">
-            <li><a href="../index.php">Home</a></li><li><a href="rooms.php">Rooms</a></li><li><a href="booking.php" class="active">Booking</a></li><li><a href="dining.php">Dining</a></li><li><a href="../index.php#experiences">Experiences</a></li><li><a href="../index.php#contact">Contact</a></li>
+            <li><a href="../index.php">Home</a></li>
+            <li><a href="rooms.php" class>Rooms</a></li>
+            <li><a href="booking.php" class="active">Booking</a></li>
+            <li><a href="dining.php">Dining</a></li>
+            <li><a href="experiences.php">Experiences</a></li>
+            <li><a href="contact.php">Contact</a></li>
         </ul>
         <a href="booking.php" class="btn-book-now">Book Now</a>
         <?php if (is_logged_in()): ?><a href="success.php" class="btn-login">My Account</a><?php else: ?><a href="info.php" class="btn-login">Login</a><?php endif; ?>
