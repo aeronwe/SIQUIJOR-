@@ -21,7 +21,7 @@ $diningSpaces = [
         'alt' => 'The Island Bar',
     ],
     [
-        'name' => 'Beach BBQ Nights',
+        'name' => 'Coast Grill Nights',
         'tag' => 'Grilled Seafood & Filipino BBQ',
         'description' => 'Open air dining under the stars.',
         'hours' => '5:00 PM - 4:00 AM',
@@ -87,7 +87,7 @@ $diningSpaces = [
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                             <?= htmlspecialchars($space['hours']) ?>
                         </p>
-                        <a href="#" class="btn-view-menu">View More &rarr;</a>
+                        <a href="#" class="btn-view-menu">View More</a>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -102,7 +102,7 @@ $diningSpaces = [
                     <span class="inroom-dining-icon"></span>
                     <div>
                         <h3>In-Room Dining — Available 24/7</h3>
-                        <p>Enjoy our full menu from the comfort of your room. Order anytime via phone or the resort app.</p>
+                        <p>Enjoy our full menu from the comfort of your room. Order anytime via phone on the resort website.</p>
                     </div>
                 </div>
                 <a href="#" class="btn-order-now">Order Now &rarr;</a>

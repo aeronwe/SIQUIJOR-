@@ -274,3 +274,177 @@ function create_reservation(
 
     return (int) $pdo->lastInsertId();
 }
+
+// ── Admin Authentication ──────────────────────────────────
+
+function is_admin_logged_in(): bool
+{
+    return isset($_SESSION['admin_id']);
+}
+
+function require_admin_login(): void
+{
+    if (!is_admin_logged_in()) {
+        redirect('login.php');
+    }
+}
+
+function get_admin_by_email(PDO $pdo, string $email): ?array
+{
+    return get_admin_by_identifier($pdo, $email);
+}
+
+function get_admin_by_identifier(PDO $pdo, string $identifier): ?array
+{
+    $stmt = $pdo->prepare('
+        SELECT * FROM admins 
+        WHERE email = :id1 
+           OR name = :id2 
+           OR LOWER(name) = LOWER(:id3)
+           OR LOWER(SUBSTRING_INDEX(email, "@", 1)) = LOWER(:id4)
+        LIMIT 1
+    ');
+    $stmt->execute([
+        'id1' => $identifier,
+        'id2' => $identifier,
+        'id3' => $identifier,
+        'id4' => $identifier,
+    ]);
+    $admin = $stmt->fetch();
+    return $admin ?: null;
+}
+
+function get_admin_by_id(PDO $pdo, int $id): ?array
+{
+    $stmt = $pdo->prepare('SELECT id, name, email, created_at FROM admins WHERE id = :id');
+    $stmt->execute(['id' => $id]);
+    $admin = $stmt->fetch();
+    return $admin ?: null;
+}
+
+function create_admin(PDO $pdo, string $name, string $email, string $password): bool
+{
+    $stmt = $pdo->prepare(
+        'INSERT INTO admins (name, email, password) VALUES (:name, :email, :password)'
+    );
+    return $stmt->execute([
+        'name' => $name,
+        'email' => $email,
+        'password' => password_hash($password, PASSWORD_DEFAULT),
+    ]);
+}
+
+function verify_superadmin_password(string $password): bool
+{
+    if (!defined('SUPERADMIN_PASSWORD')) {
+        return false;
+    }
+    return hash_equals(SUPERADMIN_PASSWORD, $password);
+}
+
+function update_admin_profile(PDO $pdo, int $id, string $name, string $email): bool
+{
+    $stmt = $pdo->prepare('UPDATE admins SET name = :name, email = :email WHERE id = :id');
+    return $stmt->execute([
+        'name' => $name,
+        'email' => $email,
+        'id' => $id,
+    ]);
+}
+
+function update_admin_password(PDO $pdo, int $id, string $newPassword): bool
+{
+    $stmt = $pdo->prepare('UPDATE admins SET password = :password WHERE id = :id');
+    return $stmt->execute([
+        'password' => password_hash($newPassword, PASSWORD_DEFAULT),
+        'id' => $id,
+    ]);
+}
+
+// ── Reservation Management (Admin) ───────────────────────
+
+function get_all_reservations(PDO $pdo, ?string $status = null, ?string $search = null): array
+{
+    $sql = 'SELECT * FROM reservations WHERE 1=1';
+    $params = [];
+
+    if ($status && $status !== 'all') {
+        $sql .= ' AND status = :status';
+        $params['status'] = $status;
+    }
+
+    if ($search) {
+        $sql .= ' AND (full_name LIKE :search OR email LIKE :search2 OR room_type LIKE :search3)';
+        $params['search'] = "%$search%";
+        $params['search2'] = "%$search%";
+        $params['search3'] = "%$search%";
+    }
+
+    $sql .= ' ORDER BY created_at DESC';
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll();
+}
+
+function get_reservation_by_id(PDO $pdo, int $id): ?array
+{
+    $stmt = $pdo->prepare('SELECT * FROM reservations WHERE id = :id');
+    $stmt->execute(['id' => $id]);
+    $res = $stmt->fetch();
+    return $res ?: null;
+}
+
+function update_reservation_status(PDO $pdo, int $id, string $status): bool
+{
+    $allowed = ['pending', 'confirmed', 'cancelled'];
+    if (!in_array($status, $allowed, true)) return false;
+
+    $stmt = $pdo->prepare('UPDATE reservations SET status = :status WHERE id = :id');
+    return $stmt->execute(['status' => $status, 'id' => $id]);
+}
+
+function delete_reservation(PDO $pdo, int $id): bool
+{
+    $stmt = $pdo->prepare('DELETE FROM reservations WHERE id = :id');
+    return $stmt->execute(['id' => $id]);
+}
+
+// ── Dashboard Stats ──────────────────────────────────────
+
+function get_dashboard_stats(PDO $pdo): array
+{
+    $stats = [];
+
+    // Total rooms
+    $stmt = $pdo->query('SELECT COUNT(*) FROM rooms');
+    $stats['total_rooms'] = (int) $stmt->fetchColumn();
+
+    // Total reservations
+    $stmt = $pdo->query('SELECT COUNT(*) FROM reservations');
+    $stats['total_reservations'] = (int) $stmt->fetchColumn();
+
+    // Pending reservations
+    $stmt = $pdo->query("SELECT COUNT(*) FROM reservations WHERE status = 'pending'");
+    $stats['pending_reservations'] = (int) $stmt->fetchColumn();
+
+    // Today's check-ins
+    $today = date('Y-m-d');
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM reservations WHERE checkin_date = :today AND status != 'cancelled'");
+    $stmt->execute(['today' => $today]);
+    $stats['today_checkins'] = (int) $stmt->fetchColumn();
+
+    // Total revenue (confirmed only)
+    $stmt = $pdo->query("SELECT COALESCE(SUM(total_amount), 0) FROM reservations WHERE status = 'confirmed'");
+    $stats['total_revenue'] = (float) $stmt->fetchColumn();
+
+    // Total guests (users)
+    $stmt = $pdo->query('SELECT COUNT(*) FROM users');
+    $stats['total_guests'] = (int) $stmt->fetchColumn();
+
+    // Total services
+    $stmt = $pdo->query('SELECT COUNT(*) FROM services');
+    $stats['total_services'] = (int) $stmt->fetchColumn();
+
+    return $stats;
+}

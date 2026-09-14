@@ -32,16 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelector('.navbar-links');
 
     menuToggle?.addEventListener('click', () => {
-        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-        navLinks.style.flexDirection = 'column';
-        navLinks.style.position = 'absolute';
-        navLinks.style.top = '128px';
-        navLinks.style.left = '0';
-        navLinks.style.right = '0';
-        navLinks.style.background = 'var(--color-forest)';
-        navLinks.style.padding = '16px 24px';
-        navLinks.style.gap = '16px';
-        navLinks.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
+        navLinks?.classList.toggle('open');
     });
 
     // Smooth scroll for nav links
@@ -58,56 +49,98 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Dining Carousel
-    const carousel = document.getElementById('diningCarousel');
-    const prevBtn = document.getElementById('diningPrev');
-    const nextBtn = document.getElementById('diningNext');
+    const diningCarousel = document.getElementById('diningCarousel');
+    const diningPrevBtn = document.getElementById('diningPrev');
+    const diningNextBtn = document.getElementById('diningNext');
 
-    if (carousel && prevBtn && nextBtn) {
-        let currentIndex = 0;
-
-        function getDiningCardWidth() {
-            const card = carousel.querySelector('.dining-card');
-            if (!card) return 0;
-            const style = window.getComputedStyle(carousel);
+    if (diningCarousel && diningPrevBtn && diningNextBtn) {
+        function getCardStep() {
+            const card = diningCarousel.querySelector('.dining-card');
+            if (!card) return 320;
+            const style = window.getComputedStyle(diningCarousel);
             const gap = parseFloat(style.gap) || 28;
             return card.offsetWidth + gap;
         }
 
-        function getVisibleCount() {
-            const w = window.innerWidth;
-            if (w <= 768) return 1;
-            if (w <= 992) return 2;
-            return 3;
-        }
+        function slideNext() {
+            const maxScroll = diningCarousel.scrollWidth - diningCarousel.clientWidth;
 
-        function getTotalCards() {
-            return carousel.querySelectorAll('.dining-card').length;
-        }
-
-        function scrollCarousel(index) {
-            const cardW = getDiningCardWidth();
-            carousel.scrollTo({ left: index * cardW, behavior: 'smooth' });
-        }
-
-        prevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                scrollCarousel(currentIndex);
+            // If cards fit entirely within the container without overflow, cycle elements
+            if (maxScroll <= 5) {
+                const firstCard = diningCarousel.firstElementChild;
+                if (firstCard) {
+                    firstCard.style.opacity = '0';
+                    firstCard.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        diningCarousel.appendChild(firstCard);
+                        firstCard.style.opacity = '';
+                        firstCard.style.transform = '';
+                    }, 140);
+                }
+                return;
             }
+
+            const step = getCardStep();
+            // If at or near the end, loop smoothly to beginning
+            if (diningCarousel.scrollLeft >= maxScroll - 15) {
+                diningCarousel.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                diningCarousel.scrollBy({ left: step, behavior: 'smooth' });
+            }
+        }
+
+        function slidePrev() {
+            const maxScroll = diningCarousel.scrollWidth - diningCarousel.clientWidth;
+
+            // If cards fit entirely within the container without overflow, cycle elements backwards
+            if (maxScroll <= 5) {
+                const lastCard = diningCarousel.lastElementChild;
+                if (lastCard) {
+                    lastCard.style.opacity = '0';
+                    lastCard.style.transform = 'scale(0.95)';
+                    diningCarousel.prepend(lastCard);
+                    setTimeout(() => {
+                        lastCard.style.opacity = '';
+                        lastCard.style.transform = '';
+                    }, 40);
+                }
+                return;
+            }
+
+            const step = getCardStep();
+            // If at or near the start, loop smoothly to end
+            if (diningCarousel.scrollLeft <= 15) {
+                diningCarousel.scrollTo({ left: maxScroll, behavior: 'smooth' });
+            } else {
+                diningCarousel.scrollBy({ left: -step, behavior: 'smooth' });
+            }
+        }
+
+        diningNextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            slideNext();
         });
 
-        nextBtn.addEventListener('click', () => {
-            const maxIndex = getTotalCards() - getVisibleCount();
-            if (currentIndex < maxIndex) {
-                currentIndex++;
-                scrollCarousel(currentIndex);
+        diningPrevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            slidePrev();
+        });
+
+        // Keyboard navigation for accessibility
+        diningCarousel.setAttribute('tabindex', '0');
+        diningCarousel.setAttribute('aria-label', 'A Taste of the Tropics Carousel');
+        diningCarousel.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                slideNext();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                slidePrev();
             }
         });
     }
 
-    // =============================================
     // BOOKING PAGE LOGIC
-    // =============================================
     const bookCheckin = document.getElementById('bookCheckin');
     const bookCheckout = document.getElementById('bookCheckout');
     const bookAdults = document.getElementById('bookAdults');
@@ -162,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // ─── Dynamic Additional Guests ───────────────────────────
+        // Dynamic Additional Guests 
         function updateAdditionalGuests() {
             const adults = parseInt(bookAdults.value) || 1;
             const children = parseInt(bookChildren.value) || 0;
@@ -201,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initialize additional guests on load
         updateAdditionalGuests();
 
-        // ─── Update Booking Summary ──────────────────────────────
+        // Update Booking Summary
         function updateBookingSummary() {
             const selectedOption = bookRoomType.options[bookRoomType.selectedIndex];
             const price = parseFloat(selectedOption.getAttribute('data-price')) || 0;
@@ -214,13 +247,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (summaryRoomBadge) summaryRoomBadge.textContent = badge;
 
             // Update room image
-            if (summaryRoomImage) {
-                if (image) {
-                    summaryRoomImage.innerHTML = `<img src="${image}" alt="${roomName}" loading="lazy">`;
-                } else {
-                    summaryRoomImage.innerHTML = '<span class="summary-room-placeholder">[ Selected Room Image ]</span>';
-                }
-            }
+        if (summaryRoomImage) {
+             if (image) {
+                  summaryRoomImage.innerHTML = `<img src="${image}" alt="${roomName}" loading="lazy">`;
+
+            summaryRoomImage.onclick = () => {
+                 const lightbox = document.getElementById('imageLightbox');
+                const lightboxImage = document.getElementById('lightboxImage');
+
+                 lightboxImage.src = image;
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+        };
+    } else {
+        summaryRoomImage.innerHTML = '<span class="summary-room-placeholder">[ Selected Room Image ]</span>';
+        summaryRoomImage.onclick = null;
+    }
+}
 
             // Calculate nights
             let nights = 0;
@@ -275,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // ─── Confirm Booking ─────────────────────────────────────
+        // Confirm Booking 
         const confirmBtn = document.getElementById('btnConfirmBooking');
         const modalOverlay = document.getElementById('bookingModalOverlay');
         const modalDetails = document.getElementById('bookingModalDetails');
@@ -303,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (inp.value.trim()) additionalGuests.push(inp.value.trim());
                 });
 
-                // ── Client-side validation ──
+                // Client-side validation
                 const errors = [];
                 if (!bookCheckin.value) errors.push('Please select a check-in date.');
                 if (!bookCheckout.value) errors.push('Please select a check-out date.');
@@ -329,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                // ── Calculate total ──
+                // Calculate total 
                 let nights = 0;
                 if (bookCheckin.value && bookCheckout.value) {
                     const ci = new Date(bookCheckin.value);
@@ -341,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const resortFee = 500;
                 const total = subtotal + tax + resortFee;
 
-                // ── Submit to server ──
+                // Submit to server
                 confirmBtn.disabled = true;
                 confirmBtn.textContent = 'Processing...';
 
@@ -423,6 +466,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.body.style.overflow = '';
                 }
             });
+            // Lightbox close handling
+            const lightboxOverlay = document.getElementById('imageLightbox');
+            const lightboxClose = document.getElementById('lightboxClose');
+            if (lightboxOverlay) {
+                lightboxOverlay.addEventListener('click', (e) => {
+                    if (e.target === lightboxOverlay || e.target === lightboxClose) {
+                        lightboxOverlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
         }
     }
 });

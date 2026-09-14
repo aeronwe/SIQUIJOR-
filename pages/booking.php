@@ -264,6 +264,13 @@ $roomTypeIndex = array_search($prefillRoomType, ['standard', 'deluxe', 'suite'],
         </div>
     </section>
 </main>
+    <!-- Image Lightbox Overlay -->
+    <div class="image-lightbox-overlay" id="imageLightbox">
+        <div class="image-lightbox-content">
+            <span class="lightbox-close" id="lightboxClose">&times;</span>
+            <img id="lightboxImage" src="" alt="Room Image" />
+        </div>
+    </div>
 
 <!-- Booking Confirmation Modal -->
 <div class="booking-modal-overlay" id="bookingModalOverlay">

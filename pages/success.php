@@ -94,15 +94,16 @@ $flash = get_flash_message();
             <li><a href="../index.php">Home</a></li>
             <li><a href="rooms.php">Rooms</a></li>
             <li><a href="booking.php">Booking</a></li>
-            <li><a href="success.php" class="active">My Account</a></li>
             <li><a href="dining.php">Dining</a></li>
             <li><a href="experiences.php">Experiences</a></li>
             <li><a href="contact.php">Contact</a></li>
         </ul>
+        <a href="booking.php" class="btn-book-now">Book Now</a>
         <div class="nav-user-actions">
             <span class="nav-user-greeting">Hi, <?= htmlspecialchars($user['first_name']) ?></span>
             <a href="success.php?action=logout" class="btn-logout-nav">Logout</a>
         </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
 </nav>
 

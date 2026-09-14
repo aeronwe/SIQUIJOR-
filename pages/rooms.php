@@ -4,6 +4,7 @@ require_once __DIR__ . '/../functions&val/function.php';
 $resortName = "Ejercito's Sunscape Resort";
 $rooms = [
     [
+        'slug' => 'standard-twin',
         'name' => 'Standard Twin Room',
         'badge' => 'Standard',
         'specs' => '30 sqm  ·  2 Guests  ·  2 Beds',
@@ -14,6 +15,7 @@ $rooms = [
         'image' => 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80',
     ],
     [
+        'slug' => 'deluxe-garden',
         'name' => 'Deluxe Garden View',
         'badge' => 'Deluxe',
         'specs' => '38 sqm  ·  2 Guests  ·  King Bed',
@@ -24,6 +26,7 @@ $rooms = [
         'image' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80',
     ],
     [
+        'slug' => 'premier-ocean',
         'name' => 'Premier Ocean Suite',
         'badge' => 'Suite',
         'specs' => '58 sqm  ·  3 Guests  ·  King + Extra Bed',
@@ -34,6 +37,7 @@ $rooms = [
         'image' => 'https://a0.muscache.com/im/pictures/hosting/Hosting-22680436/original/42f1ab5b-f7fb-4287-ba13-e34f1758563d.jpeg?im_w=1200',
     ],
     [
+        'slug' => 'family-villa',
         'name' => 'Family Beach Villa',
         'badge' => 'Villa',
         'specs' => '85 sqm  ·  5 Guests  ·  2 Beds',
@@ -44,6 +48,7 @@ $rooms = [
         'image' => 'https://images.squarespace-cdn.com/content/v1/5b4f0c8d89c17294e53d4ffc/1532678056046-2I393HL258IGMVG5LB7Z/351bbf9b32ea226d4294d111dad38ed0.jpg?format=2500w',
     ],
     [
+        'slug' => 'honeymoon-paradise',
         'name' => 'Honeymoon Paradise Suite',
         'badge' => 'Suite',
         'specs' => '72 sqm  ·  2 Guests  ·  King Bed',
@@ -204,7 +209,10 @@ $hasFilters = $selectedType !== 'all' || $selectedPrice !== 'all' || $selectedGu
                             <p class="room-page-description"><?= htmlspecialchars($room['description']) ?></p>
                             <div class="room-page-bottom">
                                 <p class="room-price"><?= htmlspecialchars($room['price']) ?> <span>/ night</span></p>
-                                <a href="booking.php" class="btn-view-details">Book Now</a>
+                                <div>
+                                    <a href="room-detail.php?room=<?= urlencode($room['slug']) ?>" class="btn-view-details btn-outline">Details</a>
+                                    <a href="booking.php" class="btn-view-details">Book Now</a>
+                                </div>
                             </div>
                         </div>
                     </article>

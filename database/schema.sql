@@ -75,3 +75,17 @@ CREATE TABLE IF NOT EXISTS products (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS admins (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_admins_email (email)
+) ENGINE=InnoDB;
+
+-- Default admin seed (password: Admin@123)
+INSERT IGNORE INTO admins (name, email, password) VALUES
+('Resort Admin', 'admin@sunscape.com', '$2y$10$LcOztzfCYMzEdnWFOn4sieszPb2RM3WKBkqSoWe9ivsUzl3Vif6xC');

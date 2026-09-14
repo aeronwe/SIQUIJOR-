@@ -43,7 +43,7 @@ $allRooms = [
         'price' => 8200,
         'description' => 'Luxurious suite with panoramic ocean views, separate living area, and premium amenities. The perfect retreat for those seeking the finest island experience with generous space and refined comfort.',
         'images' => [
-            'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1000&q=80',
+            'https://a0.muscache.com/im/pictures/hosting/Hosting-22680436/original/42f1ab5b-f7fb-4287-ba13-e34f1758563d.jpeg?im_w=1200',
             'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=400&q=80',
             'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=400&q=60',
             'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=400&q=70',
@@ -58,7 +58,7 @@ $allRooms = [
         'price' => 12500,
         'description' => 'A private, easygoing base for families who want more room to gather, rest, and explore. Features separate living and dining areas with direct beach access and a private garden.',
         'images' => [
-            'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?auto=format&fit=crop&w=1000&q=80',
+            'https://images.squarespace-cdn.com/content/v1/5b4f0c8d89c17294e53d4ffc/1532678056046-2I393HL258IGMVG5LB7Z/351bbf9b32ea226d4294d111dad38ed0.jpg?format=2500w',
             'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?auto=format&fit=crop&w=400&q=80',
             'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?auto=format&fit=crop&w=400&q=60',
             'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?auto=format&fit=crop&w=400&q=70',
@@ -73,7 +73,7 @@ $allRooms = [
         'price' => 15000,
         'description' => 'A romantic hideaway with the space and privacy to make a special island holiday feel timeless. Features a private plunge pool, sunset terrace, and complimentary champagne on arrival.',
         'images' => [
-            'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1000&q=80',
+            'https://media.cntraveller.com/photos/611bf43e69410e829d87eb1a/16:9/w_1920,c_limit/pangulasian_cnt_17sept12_pr.jpg',
             'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=400&q=80',
             'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=400&q=60',
             'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=400&q=70',
@@ -205,42 +205,7 @@ if (!$room) {
                             <span class="rd-price-amount">₱<?= number_format($room['price']) ?></span>
                             <span class="rd-price-label">per night</span>
                         </div>
-
-                        <div class="rd-booking-fields">
-                            <div class="booking-field-outlined">
-                                <label for="rdCheckin">Check-In</label>
-                                <input type="date" id="rdCheckin" name="checkin">
-                            </div>
-                            <div class="booking-field-outlined">
-                                <label for="rdCheckout">Check-Out</label>
-                                <input type="date" id="rdCheckout" name="checkout">
-                            </div>
-                            <div class="booking-field-outlined">
-                                <label for="rdGuests">Guests</label>
-                                <select id="rdGuests" name="guests">
-                                    <?php for ($g = 1; $g <= $room['guests']; $g++): ?>
-                                    <option value="<?= $g ?>" <?= $g === 2 ? 'selected' : '' ?>><?= $g ?> Adult<?= $g > 1 ? 's' : '' ?>, 0 Children</option>
-                                    <?php endfor; ?>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="rd-price-breakdown" id="rdPriceBreakdown">
-                            <div class="summary-line">
-                                <span id="rdNightsLabel">₱<?= number_format($room['price']) ?> × 0 nights</span>
-                                <span id="rdSubtotal">₱0</span>
-                            </div>
-                            <div class="summary-line">
-                                <span>Taxes & Fees</span>
-                                <span id="rdTax">₱0</span>
-                            </div>
-                            <div class="summary-total-line">
-                                <span>Total</span>
-                                <span class="summary-total-amount" id="rdTotal">₱0</span>
-                            </div>
-                        </div>
-
-                        <a href="booking.php" class="btn-confirm-booking" id="rdBookBtn">Book This Room &rarr;</a>
+                        <a href="booking.php" class="btn-confirm-booking" id="rdBookBtn">Book This Room →</a>
                         <p class="summary-cancel-note">✓ Free cancellation up to 48 hours before check-in.</p>
                     </div>
                 </div>

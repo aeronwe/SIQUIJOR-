@@ -33,22 +33,23 @@ require_once __DIR__ . '/functions&val/function.php';
         [
             'title' => 'Luxury Rooms',
             'description' => '5 unique room categories from cozy twins to private villas all with premium in room amenities.',
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bed-double"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/></svg>',
+            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M200-200h-40l-26-80H80v-201q0-33 23.5-56t56.5-23v-120q0-33 23.5-56.5T240-760h480q33 0 56.5 23.5T800-680v120q33 0 56.5 23.5T880-480v200h-54l-26 80h-40l-26-80H226l-26 80Zm320-360h200v-120H520v120Zm-280 0h200v-120H240v120Zm-80 200h640v-120H160v120Zm640 0H160h640Z"/></svg>',
         ],
         [
             'title' => 'El Juwan Dining',
             'description' => 'Filipino cuisine, poolside cocktails, and beachfront BBQ under the stars.',
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-utensils"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>',
+            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="m175-120-56-56 410-410q-18-42-5-95t57-95q53-53 118-62t106 32q41 41 32 106t-62 118q-42 44-95 57t-95-5l-50 50 304 304-56 56-304-302-304 302Zm118-342L173-582q-54-54-54-129t54-129l248 250-128 128Z"/></svg>',
         ],
         [
-            'title' => 'Malaya',
-            'description' => 'Island hopping, sunset sailing, and forest trails awaits you.',
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tree-palm"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/></svg>',
+            'title' => 'Malaya Island Tours',
+            'description' => 'Island hopping, snorkeling, diving, and other water  activities awaits you.',
+            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="m120-420 320-460v460H120Zm153-80h87v-125l-87 125Zm227 80q12-28 26-98t14-142q0-72-13.5-148T500-920q61 18 121.5 67t109 117q48.5 68 79 149.5T840-420H500Zm104-80h148q-17-77-55.5-141T615-750q2 21 3.5 43.5T620-660q0 47-4.5 87T604-500ZM360-200q-36 0-67-17t-53-43q-14 15-30.5 28T173-211q-35-26-59.5-64.5T80-360h800q-9 46-33.5 84.5T787-211q-20-8-36.5-21T720-260q-23 26-53.5 43T600-200q-36 0-67-17t-53-43q-22 26-53 43t-67 17ZM80-40v-80h40q32 0 62.5-10t57.5-30q27 20 57.5 29.5T360-121q32 0 62-9.5t58-29.5q27 20 57.5 29.5T600-121q32 0 62-9.5t58-29.5q28 20 58 30t62 10h40v80h-40q-31 0-61-7.5T720-70q-29 15-59 22.5T600-40q-31 0-61-7.5T480-70q-29 15-59 22.5T360-40q-31 0-61-7.5T240-70q-29 15-59 22.5T120-40H80Zm280-460Zm244 0Z"/></svg>',
         ],
     ];
 
     $rooms = [
         [
+            'slug' => 'standard-twin',
             'name' => 'Standard Twin Room',
             'badge' => 'Standard',
             'badge_class' => 'standard',
@@ -57,6 +58,7 @@ require_once __DIR__ . '/functions&val/function.php';
             'image_url' => 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80',
         ],
         [
+            'slug' => 'deluxe-garden',
             'name' => 'Deluxe Garden View',
             'badge' => 'Deluxe',
             'badge_class' => 'deluxe',
@@ -65,6 +67,7 @@ require_once __DIR__ . '/functions&val/function.php';
             'image_url' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80',
         ],
         [
+            'slug' => 'premier-ocean',
             'name' => 'Premier Ocean Suite',
             'badge' => 'Suite',
             'badge_class' => 'suite',
@@ -74,13 +77,53 @@ require_once __DIR__ . '/functions&val/function.php';
         ],
     ];
 
+    $diningOptions = [
+        [
+            'name' => 'Island Kitchen',
+            'type' => 'Beachfront Restaurant',
+            'image' => 'assets/images/island_kitchen.jpg',
+            'alt' => 'Island Kitchen Beachfront Restaurant',
+        ],
+        [
+            'name' => 'Island Bar',
+            'type' => 'Cocktails & Nightlife',
+            'image' => 'assets/images/island_bar.jpg',
+            'alt' => 'Island Bar Cocktails & Nightlife',
+        ],
+        [
+            'name' => 'Coast Grill Nights',
+            'type' => 'Beachfront Fish & BBQ Grill',
+            'image' => 'assets/images/Beach-BBQ-9.jpg',
+            'alt' => 'Coast Grill Nights Beach BBQ',
+        ],
+        [
+            'name' => 'In-Room Dining',
+            'type' => '24/7 Villa & Suite Service',
+            'image' => 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80',
+            'alt' => 'In-Room Dining Gourmet Service',
+        ],
+        [
+            'name' => 'Sunset Deck Lounge',
+            'type' => 'Aperitifs & Tropical Tapas',
+            'image' => 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
+            'alt' => 'The Sunset Deck Lounge',
+        ],
+        [
+            'name' => 'Bohol Sea Cafe',
+            'type' => 'Artisan Coffee & Bakery',
+            'image' => 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80',
+            'alt' => 'Bohol Sea Cafe & Bakery',
+        ],
+    ];
+
     $quickLinks = [
         ['label' => 'Home', 'url' => '#home'],
-        ['label' => 'Rooms & Suites', 'url' => 'rooms.php'],
-        ['label' => 'Make a Booking', 'url' => 'booking.php'],
-        ['label' => 'Dining & Cuisines', 'url' => 'dining.php'],
-        ['label' => 'Experiences', 'url' => '#experiences'],
-        ['label' => 'Contact Us', 'url' => '#contact'],
+        ['label' => 'Rooms & Suites', 'url' => 'pages/rooms.php'],
+        ['label' => 'Make a Booking', 'url' => 'pages/booking.php'],
+        ['label' => 'Dining & Cuisines', 'url' => 'pages/dining.php'],
+        ['label' => 'Experiences', 'url' => 'pages/experiences.php'],
+        ['label' => 'Contact Us', 'url' => 'pages/contact.php'],
+        ['label' => 'Staff Login', 'url' => 'admin/login.php'],
     ];
 
     $socials = [
@@ -243,7 +286,10 @@ require_once __DIR__ . '/functions&val/function.php';
                     <div class="room-info">
                         <h3 class="room-name"><?= htmlspecialchars($room['name']) ?></h3>
                         <p class="room-specs"><?= htmlspecialchars($room['specs']) ?></p>
-                        <p class="room-price"><?= $room['price'] ?> <span>/ night</span></p>
+                        <div class="room-card-bottom">
+                            <p class="room-price"><?= $room['price'] ?> <span>/ night</span></p>
+                            <a href="pages/room-detail.php?room=<?= urlencode($room['slug']) ?>" class="btn-room-detail">Details</a>
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -266,11 +312,9 @@ require_once __DIR__ . '/functions&val/function.php';
         <div class="overview-paragraphs">
             <p><?= htmlspecialchars($resortName) ?>, a premier beachfront destination nestled along the pristine shores of Siquijor, Philippines, seamlessly blends warm Filipino hospitality with breathtaking natural beauty across its tropical grounds. Known for its tranquil charm and genuine island spirit, the resort ensures every guest feels truly at home.</p>
 
-            <p>Guests can unwind at our beachfront pool, savour authentic Filipino cuisine at <strong>El Juwan</strong>, or raise a glass at our signature <strong>Island Bar</strong> where tropical cocktails meet stunning sunset views. Adventure seekers can discover the beauty of the sea with <strong>Malaya Island Hopping</strong>, offering tours to Siquijor's beautiful coves and marine sanctuaries.</p>
+            <p>Guests can unwind at our beachfront pool, savour authentic Filipino cuisine and enjoy memorable gatherings at <strong>El Juwan</strong>, our dining and events destination, or raise a glass at our signature <strong>Island Bar</strong>, where tropical cocktails meet stunning sunset views. Adventure seekers can discover the beauty of the sea with <strong>Malaya Tours</strong>, offering tours to Siquijor's beautiful coves and islands.</p>
 
-            <p>For celebrations, corporate retreats, and special occasions, our <strong>Meetings &amp; Events</strong> facilities provide elegantly appointed spaces with modern technology and seaside backdrops. The resort's dedicated team ensures every gathering becomes an extraordinary memory set against the beauty of the Visayan sea.</p>
-
-            <p><?= htmlspecialchars($resortName) ?> continues to define the island resort experience offering an intimate escape where the rhythms of the ocean guide each unforgettable day from sunrise to starlit shores.</p>
+            <p>For celebrations, corporate retreats, and special occasions, <strong>El Juwan</strong> offers elegantly appointed spaces equipped with modern technology and complemented by stunning seaside backdrops. With the resort's dedicated team ensuring every detail is thoughtfully handled, each gathering becomes an extraordinary memory set against the beauty of the Visayan Sea.</p>
         </div>
     </div>
 </section>
@@ -287,21 +331,21 @@ require_once __DIR__ . '/functions&val/function.php';
         <div class="brands-panel">
             <img src="assets/images/island_kitchen.jpg" alt="Island Kitchen" class="brands-panel-img">
             <div class="brands-panel-overlay">
-                <span class="brands-panel-name">Island Kitchen</span>
-                <span class="brands-panel-sub">Restaurant &amp; Bar</span>
+                <span class="brands-panel-name">El Juwan Restaurant</span>
+                <span class="brands-panel-sub">Restaurant &amp; Venue</span>
             </div>
         </div>
         <div class="brands-panel">
-            <img src="assets/images/meetings_events.jpg" alt="Meetings &amp; Events" class="brands-panel-img">
+            <img src="assets/images/island_bar.jpg" alt="Meetings &amp; Events" class="brands-panel-img">
             <div class="brands-panel-overlay">
-                <span class="brands-panel-name">Meetings &amp; Events</span>
-                <span class="brands-panel-sub">Venue &amp; Celebrations</span>
+                <span class="brands-panel-name">Island Bar</span>
+                <span class="brands-panel-sub">Bar &amp; Clvb</span>
             </div>
         </div>
         <div class="brands-panel">
             <img src="assets/images/island_hopping.jpg" alt="Island Hopping" class="brands-panel-img">
             <div class="brands-panel-overlay">
-                <span class="brands-panel-name">Island Hopping</span>
+                <span class="brands-panel-name">Malaya Tours</span>
                 <span class="brands-panel-sub">Tours &amp; Adventures</span>
             </div>
         </div>
@@ -320,31 +364,23 @@ require_once __DIR__ . '/functions&val/function.php';
     </div>
 
     <div class="dining-carousel-wrap">
-        <button class="dining-arrow dining-arrow-left" id="diningPrev" aria-label="Previous">&larr;</button>
+        <button class="dining-arrow dining-arrow-left" id="diningPrev" aria-label="Previous" type="button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
         <div class="dining-carousel" id="diningCarousel">
-            <div class="dining-card">
-                <div class="dining-card-img-wrap">
-                    <img src="https://d3fphkxyf5o5bm.cloudfront.net/image-resize/format=webp,w=720/Q524tReNnAnmuqp47g5PYLh7Ndbxc4OB6Pwzi5WJrO" alt="Island Kitchen" class="dining-card-img">
+            <?php foreach ($diningOptions as $dining): ?>
+                <div class="dining-card">
+                    <div class="dining-card-img-wrap">
+                        <img src="<?= htmlspecialchars($dining['image']) ?>" alt="<?= htmlspecialchars($dining['alt']) ?>" class="dining-card-img" loading="lazy">
+                    </div>
+                    <h3 class="dining-card-name"><?= htmlspecialchars($dining['name']) ?></h3>
+                    <p class="dining-card-type"><?= htmlspecialchars($dining['type']) ?></p>
                 </div>
-                <h3 class="dining-card-name">Island Kitchen</h3>
-                <p class="dining-card-type">Beachfront Restaurant</p>
-            </div>
-            <div class="dining-card">
-                <div class="dining-card-img-wrap">
-                    <img src="assets/images/island_bar.jpg" alt="Island Bar" class="dining-card-img">
-                </div>
-                <h3 class="dining-card-name">Island Bar</h3>
-                <p class="dining-card-type">Cocktails &amp; Nightlife</p>
-            </div>
-            <div class="dining-card">
-                <div class="dining-card-img-wrap">
-                    <img src="assets/images/Beach-BBQ-9.jpg" alt="Beach BBQ" class="dining-card-img">
-                </div>
-                <h3 class="dining-card-name">Beach BBQ Nights</h3>
-                <p class="dining-card-type">Al Fresco Grilling</p>
-            </div>
+            <?php endforeach; ?>
         </div>
-        <button class="dining-arrow dining-arrow-right" id="diningNext" aria-label="Next">&rarr;</button>
+        <button class="dining-arrow dining-arrow-right" id="diningNext" aria-label="Next" type="button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
     </div>
 </section>
 
@@ -395,10 +431,16 @@ require_once __DIR__ . '/functions&val/function.php';
 
         <div class="footer-bottom">
             <p>&copy; <?= $currentYear ?> <?= htmlspecialchars($resortName) ?>. All rights reserved.</p>
+            <p class="footer-admin-link">
+                <a href="admin/login.php" title="Staff &amp; Management Login">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    Staff &amp; Management Portal
+                </a>
+            </p>
         </div>
     </div>
 </footer>
 
-<script src="script.js"></script>
+<script src="script.js?v=<?= time() ?>"></script>
 </body>
 </html>
