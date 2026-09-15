@@ -1570,8 +1570,28 @@ img {
 }
 
 .rd-amenity-icon {
-    font-size: 1.15rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gold-dark);
     flex-shrink: 0;
+    transition: color 0.2s ease;
+}
+
+.rd-amenity-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.rd-amenity:hover .rd-amenity-icon {
+    color: var(--color-forest);
+}
+
+.rd-amenity:hover .rd-amenity-icon svg {
+    transform: scale(1.1);
 }
 
 /* Hotel Policies */
@@ -1581,6 +1601,9 @@ img {
 }
 
 .rd-policies li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     font-size: 0.88rem;
     color: var(--color-text-medium);
     padding: 10px 0;
@@ -1590,6 +1613,21 @@ img {
 
 .rd-policies li:last-child {
     border-bottom: none;
+}
+
+.rd-policy-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gold-dark);
+    flex-shrink: 0;
+}
+
+.rd-policy-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    display: block;
 }
 
 /* Right Column — Price Card */
@@ -2301,6 +2339,17 @@ img {
     font-size: 0.78rem;
     color: var(--color-text-light);
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.summary-cancel-note svg {
+    width: 15px;
+    height: 15px;
+    fill: var(--color-forest);
+    flex-shrink: 0;
 }
 
 /* Special Requests Card */
