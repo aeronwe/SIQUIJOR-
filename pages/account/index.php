@@ -1,11 +1,11 @@
 <?php
 
-require_once __DIR__ . '/../functions&val/function.php';
-require_once __DIR__ . '/../functions&val/validation.php';
+require_once __DIR__ . '/../../functions&val/function.php';
+require_once __DIR__ . '/../../functions&val/validation.php';
 
 if (!is_logged_in()) {
     set_flash_message('error', 'Please log in to access this page.');
-    redirect('info.php');
+    redirect('../login/');
 }
 
 $user_id = $_SESSION['user_id'];
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_account'])) {
         session_destroy();
         session_start();
         set_flash_message('success', 'Your account has been deleted.');
-        redirect('info.php');
+        redirect('../login/');
     } else {
         $errors[] = "Failed to delete account. Please try again.";
     }
@@ -54,7 +54,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     session_destroy();
     session_start();
     set_flash_message('success', 'You have been logged out.');
-    redirect('info.php');
+    redirect('../login/');
 }
 
 $user = get_user_by_id($pdo, $user_id);
@@ -78,30 +78,31 @@ $flash = get_flash_message();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav class="navbar">
     <div class="navbar-inner">
-        <a href="../index.php" class="navbar-brand">
+        <a href="../../" class="navbar-brand">
             <div class="brand-icon customizable-logo">
-                <img src="../assets/images/LGO.svg" alt="Ejercito's Sunscape Resort logo">
+                <img src="../../assets/images/LGO.svg" alt="Ejercito's Sunscape Resort logo">
             </div>
             <span class="brand-text">Ejercito's Sunscape Resort</span>
         </a>
         <ul class="navbar-links">
-            <li><a href="../index.php">Home</a></li>
-            <li><a href="rooms.php">Rooms</a></li>
-            <li><a href="booking.php">Booking</a></li>
-            <li><a href="dining.php">Dining</a></li>
-            <li><a href="experiences.php">Experiences</a></li>
-            <li><a href="contact.php">Contact</a></li>
+            <li><a href="../../">Home</a></li>
+            <li><a href="../rooms/">Rooms</a></li>
+            <li><a href="../booking/">Booking</a></li>
+            <li><a href="../dining/">Dining</a></li>
+            <li><a href="../experiences/">Experiences</a></li>
+            <li><a href="../contact/">Contact</a></li>
         </ul>
-        <a href="booking.php" class="btn-book-now">Book Now</a>
+        <a href="../booking/" class="btn-book-now">Book Now</a>
         <div class="nav-user-actions">
             <span class="nav-user-greeting">Hi, <?= htmlspecialchars($user['first_name']) ?></span>
-            <a href="success.php?action=logout" class="btn-logout-nav">Logout</a>
+            <a href="index.php?action=logout" class="btn-logout-nav">Logout</a>
         </div>
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
@@ -165,7 +166,7 @@ $flash = get_flash_message();
 
             <div class="profile-section">
                 <h2 class="profile-section-title">Update Profile</h2>
-                <form class="auth-form" method="POST" action="success.php" id="updateForm">
+                <form class="auth-form" method="POST" action="index.php" id="updateForm">
                     <div class="form-row">
                         <div class="form-group form-group-half">
                             <label for="first_name" class="form-label">First Name</label>
@@ -210,7 +211,7 @@ $flash = get_flash_message();
             <div class="danger-zone">
                 <h2 class="danger-zone-title">Danger Zone</h2>
                 <p class="danger-zone-text">Deleting your account is permanent and cannot be undone.</p>
-                <form method="POST" action="success.php" id="deleteForm" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                <form method="POST" action="index.php" id="deleteForm" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
                     <button type="submit" name="delete_account" class="btn-delete" id="deleteBtn">
                         Delete My Account
                     </button>
@@ -218,8 +219,8 @@ $flash = get_flash_message();
             </div>
 
             <div class="dashboard-actions">
-                <a href="../index.php" class="btn-auth btn-secondary">← Back to Homepage</a>
-                <a href="success.php?action=logout" class="btn-auth btn-outline">Logout</a>
+                <a href="../../" class="btn-auth btn-secondary">← Back to Homepage</a>
+                <a href="index.php?action=logout" class="btn-auth btn-outline">Logout</a>
             </div>
 
         </div>

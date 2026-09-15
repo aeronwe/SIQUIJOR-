@@ -1,15 +1,17 @@
 <?php
 
-require_once __DIR__ . '/../functions&val/function.php';
-require_once __DIR__ . '/../functions&val/validation.php';
+require_once __DIR__ . '/../../functions&val/function.php';
+require_once __DIR__ . '/../../functions&val/validation.php';
 
 if (is_logged_in()) {
-    redirect('success.php');
+    redirect('../account/');
 }
 
-$redirect_after_signup = $_GET['redirect'] ?? 'success.php';
-if (!in_array($redirect_after_signup, ['success.php', 'booking.php'], true)) {
-    $redirect_after_signup = 'success.php';
+$raw_redirect = $_GET['redirect'] ?? '';
+if (in_array($raw_redirect, ['booking', 'booking.php', '../booking/', 'pages/booking.php'], true)) {
+    $redirect_after_signup = '../booking/';
+} else {
+    $redirect_after_signup = '../account/';
 }
 
 $errors     = [];
@@ -39,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($success) {
             set_flash_message('success', 'Account created successfully! Please log in.');
-            redirect('info.php?redirect=' . urlencode($redirect_after_signup));
+            redirect('../login/?redirect=' . urlencode($redirect_after_signup));
         } else {
             $errors[] = "Registration failed. Please try again.";
         }
@@ -56,7 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="auth-body">
 
@@ -70,20 +73,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="auth-grain-overlay"></div>
 
 <!-- Decorative palm trees -->
-<img class="auth-bg-palm auth-bg-palm--left" src="../assets/images/palm-bg.svg" alt="" aria-hidden="true">
-<img class="auth-bg-palm auth-bg-palm--right" src="../assets/images/palm-bg.svg" alt="" aria-hidden="true">
-<img class="auth-bg-palm auth-bg-palm--center-left" src="../assets/images/palm-bg.svg" alt="" aria-hidden="true">
-<img class="auth-bg-palm auth-bg-palm--center-right" src="../assets/images/palm-bg.svg" alt="" aria-hidden="true">
+<img class="auth-bg-palm auth-bg-palm--left" src="../../assets/images/palm-bg.svg" alt="" aria-hidden="true">
+<img class="auth-bg-palm auth-bg-palm--right" src="../../assets/images/palm-bg.svg" alt="" aria-hidden="true">
+<img class="auth-bg-palm auth-bg-palm--center-left" src="../../assets/images/palm-bg.svg" alt="" aria-hidden="true">
+<img class="auth-bg-palm auth-bg-palm--center-right" src="../../assets/images/palm-bg.svg" alt="" aria-hidden="true">
 
 <main class="auth-page-wrap">
     <div class="auth-card">
         <div class="auth-card-body">
             <!-- Left: Branding Panel -->
             <section class="auth-panel-brand">
-                <img class="auth-resort-logo" src="../assets/images/LGO.svg" alt="Ejercito's Sunscape Resort logo">
+                <img class="auth-resort-logo" src="../../assets/images/LGO.svg" alt="Ejercito's Sunscape Resort logo">
                 <p class="auth-hotel-name">Ejercito's Sunscape Resort</p>
                 <p class="auth-tagline">Where the sun meets the shore...</p>
-                <img class="auth-wave" src="../assets/images/wave.svg" alt="" aria-hidden="true">
+                <img class="auth-wave" src="../../assets/images/wave.svg" alt="" aria-hidden="true">
                 <p class="auth-greek-line">"Maligayang pagdating"</p>
                 <p class="auth-greek-line-sub">Welcome, traveler</p>
             </section>
@@ -92,8 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <section class="auth-panel-form">
                 <!-- Tab-style navigation -->
                 <div class="auth-tabs">
-                    <a href="info.php?redirect=<?= urlencode($redirect_after_signup) ?>" class="auth-tab">Login</a>
-                    <a href="Signup.php?redirect=<?= urlencode($redirect_after_signup) ?>" class="auth-tab active">Sign Up</a>
+                    <a href="../login/?redirect=<?= urlencode($redirect_after_signup) ?>" class="auth-tab">Login</a>
+                    <a href="../signup/?redirect=<?= urlencode($redirect_after_signup) ?>" class="auth-tab active">Sign Up</a>
                     <div class="auth-tab-indicator to-signup" aria-hidden="true"></div>
                 </div>
 
@@ -107,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 <?php endif; ?>
 
-                <form class="auth-form" method="POST" action="Signup.php?redirect=<?= urlencode($redirect_after_signup) ?>" id="signupForm">
+                <form class="auth-form" method="POST" action="index.php?redirect=<?= urlencode($redirect_after_signup) ?>" id="signupForm">
                     <h2>Create Your Account</h2>
                     <p class="auth-form-sub">Join us for your tropical getaway</p>
 
@@ -193,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label class="auth-checkbox"><input type="checkbox" required> I agree to the Terms &amp; Privacy Policy</label>
 
                     <button type="submit" class="auth-btn-primary" id="signupBtn">Create Account</button>
-                    <p class="auth-switch-text">Already have an account? <a href="info.php?redirect=<?= urlencode($redirect_after_signup) ?>">Login</a></p>
+                    <p class="auth-switch-text">Already have an account? <a href="../login/?redirect=<?= urlencode($redirect_after_signup) ?>">Login</a></p>
                 </form>
             </section>
         </div>

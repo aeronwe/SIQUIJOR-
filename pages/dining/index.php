@@ -1,31 +1,37 @@
 <?php
-require_once __DIR__ . '/../functions&val/function.php';
+require_once __DIR__ . '/../../functions&val/function.php';
 
 $resortName = "Ejercito's Sunscape Resort";
 
 $diningSpaces = [
     [
+        'slug' => 'el-juwan',
+        'page' => '../el-juwan/',
         'name' => 'El Juwan Restaurant',
         'tag' => 'Filipino',
         'description' => 'Our signature restaurant serving locally sourced seafood and other Filipino cuisine.',
         'hours' => '6:00 AM - 10:00 PM',
-        'image' => '../assets/images/island_kitchen.jpg',
+        'image' => '../../assets/images/island_kitchen.jpg',
         'alt' => 'El Juwan Restaurant',
     ],
     [
+        'slug' => 'island-bar',
+        'page' => '../island-bar/',
         'name' => 'The Island Bar',
         'tag' => 'Light Bites & Cocktails',
         'description' => 'Refreshing drinks and snacks by the sea.',
         'hours' => '8:00 AM - 12:00 AM',
-        'image' => '../assets/images/island_bar.jpg',
+        'image' => '../../assets/images/island_bar.jpg',
         'alt' => 'The Island Bar',
     ],
     [
+        'slug' => 'beach-bbq',
+        'page' => '../beach-bbq/',
         'name' => 'Coast Grill Nights',
         'tag' => 'Grilled Seafood & Filipino BBQ',
         'description' => 'Open air dining under the stars.',
         'hours' => '5:00 PM - 4:00 AM',
-        'image' => '../assets/images/Beach-BBQ-9.jpg',
+        'image' => '../../assets/images/Beach-BBQ-9.jpg',
         'alt' => 'Beach BBQ Nights',
     ],
 ];
@@ -35,30 +41,31 @@ $diningSpaces = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Discover dining and cuisines at Ejercito's Sunscape Resort in Siquijor — from sunrise buffets to moonlit beachfront BBQs.">
+    <meta name="description" content="Discover dining and cuisines at Ejercito's Sunscape Resort in Siquijor - from sunrise buffets to moonlit beachfront BBQs.">
     <title>Dining &amp; Cuisine | <?= htmlspecialchars($resortName) ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="inner-page">
 <nav class="navbar">
     <div class="navbar-inner">
-       <a href="../index.php" class="navbar-brand">
-            <div class="brand-icon customizable-logo"><img src="../assets/images/LGO.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></div>
+       <a href="../../" class="navbar-brand">
+            <div class="brand-icon customizable-logo"><img src="../../assets/images/LGO.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></div>
             <span class="brand-text"><?= htmlspecialchars($resortName) ?></span>
         </a>
         <ul class="navbar-links">
-            <li><a href="../index.php">Home</a></li>
-            <li><a href="rooms.php">Rooms</a></li>
-            <li><a href="booking.php">Booking</a></li>
-            <li><a href="dining.php" class="active">Dining</a></li>
-            <li><a href="experiences.php">Experiences</a></li>
-            <li><a href="contact.php">Contact</a></li>
+            <li><a href="../../">Home</a></li>
+            <li><a href="../rooms/">Rooms</a></li>
+            <li><a href="../booking/">Booking</a></li>
+            <li><a href="../dining/" class="active">Dining</a></li>
+            <li><a href="../experiences/">Experiences</a></li>
+            <li><a href="../contact/">Contact</a></li>
         </ul>
-        <a href="booking.php" class="btn-book-now">Book Now</a>
-        <?php if (is_logged_in()): ?><a href="success.php" class="btn-login">My Account</a><?php else: ?><a href="info.php" class="btn-login">Login</a><?php endif; ?>
+        <a href="../booking/" class="btn-book-now">Book Now</a>
+        <?php if (is_logged_in()): ?><a href="../account/" class="btn-login">My Account</a><?php else: ?><a href="../login/" class="btn-login">Login</a><?php endif; ?>
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
 </nav>
@@ -87,7 +94,7 @@ $diningSpaces = [
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                             <?= htmlspecialchars($space['hours']) ?>
                         </p>
-                        <a href="#" class="btn-view-menu">View More</a>
+                        <a href="<?= htmlspecialchars($space['page']) ?>" class="btn-view-menu">View More</a>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -99,9 +106,11 @@ $diningSpaces = [
         <div class="container">
             <div class="inroom-dining-inner">
                 <div class="inroom-dining-left">
-                    <span class="inroom-dining-icon"></span>
+                    <span class="inroom-dining-icon" aria-hidden="true">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                    </span>
                     <div>
-                        <h3>In-Room Dining — Available 24/7</h3>
+                        <h3>In-Room Dining: Available 24/7</h3>
                         <p>Enjoy our full menu from the comfort of your room. Order anytime via phone on the resort website.</p>
                     </div>
                 </div>
@@ -114,13 +123,13 @@ $diningSpaces = [
 <footer class="footer inner-footer" id="contact">
     <div class="container">
         <div class="footer-grid">
-            <div class="footer-brand-block"><div class="footer-brand-header"><span class="footer-brand-icon"><img src="../assets/images/LGO2.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></span></div><div class="footer-brand-name"><?= htmlspecialchars($resortName) ?></div><p class="footer-tagline">"Where the sun meets the shore..."</p><div class="footer-contact">Purok 7, Brgy. San Isidro, Siquijor, Philippines<br>+63 912 345 6789<br>reservations@ejercitosunscape.ph</div></div>
-            <div><h4 class="footer-heading">Quick Links</h4><ul class="footer-links"><li><a href="../index.php">Home</a></li><li><a href="rooms.php">Rooms &amp; Suites</a></li><li><a href="booking.php">Make a Booking</a></li><li><a href="dining.php">Dining</a></li><li><a href="../index.php#experiences">Experiences</a></li><li><a href="../index.php#contact">Contact Us</a></li></ul></div>
+            <div class="footer-brand-block"><div class="footer-brand-header"><span class="footer-brand-icon"><img src="../../assets/images/LGO2.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></span></div><div class="footer-brand-name"><?= htmlspecialchars($resortName) ?></div><p class="footer-tagline">"Where the sun meets the shore..."</p><div class="footer-contact">Purok 7, Brgy. San Isidro, Siquijor, Philippines<br>+63 912 345 6789<br>reservations@ejercitosunscape.ph</div></div>
+            <div><h4 class="footer-heading">Quick Links</h4><ul class="footer-links"><li><a href="../../">Home</a></li><li><a href="../rooms/">Rooms &amp; Suites</a></li><li><a href="../booking/">Make a Booking</a></li><li><a href="../dining/">Dining</a></li><li><a href="../../#experiences">Experiences</a></li><li><a href="../../#contact">Contact Us</a></li></ul></div>
             <div><h4 class="footer-heading">Follow Us</h4><ul class="footer-links"><li><a href="#">facebook.com/EjercitoSunscapeResort</a></li><li><a href="#">@ejercitosunscape</a></li><li><a href="#">@sunscaperesort</a></li></ul></div>
         </div>
         <div class="footer-bottom"><p>&copy; <?= date('Y') ?> <?= htmlspecialchars($resortName) ?>. All rights reserved.</p></div>
     </div>
 </footer>
-<script src="../script.js"></script>
+<script src="../../script.js"></script>
 </body>
 </html>

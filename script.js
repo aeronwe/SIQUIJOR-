@@ -158,10 +158,90 @@ document.addEventListener('DOMContentLoaded', () => {
     const summaryGuestsText = document.getElementById('summaryGuestsText');
     const guestsContainer = document.getElementById('additionalGuestsContainer');
     const guestsSubtitle = document.getElementById('additionalGuestsSubtitle');
+    const summaryExperiencesRow = document.getElementById('summaryExperiencesRow');
+    const summaryExperiencesTotal = document.getElementById('summaryExperiencesTotal');
+    const summaryExperiencesList = document.getElementById('summaryExperiencesList');
+    const expCheckboxes = document.querySelectorAll('.booking-exp-checkbox');
+    const expGuestSelects = document.querySelectorAll('.exp-guests-select');
 
     if (bookCheckin && bookCheckout && bookRoomType) {
         const todayStr = new Date().toISOString().split('T')[0];
         bookCheckin.setAttribute('min', todayStr);
+
+        // Sync experience participant selectors with booking guest counts
+        function syncExperienceGuestOptions() {
+            const adults = parseInt(bookAdults.value) || 1;
+            const children = parseInt(bookChildren.value) || 0;
+            const totalGuests = adults + children;
+            const maxSelectable = Math.max(4, totalGuests);
+
+            expGuestSelects.forEach(select => {
+                const currentVal = parseInt(select.value) || adults;
+                select.innerHTML = '';
+                for (let g = 1; g <= maxSelectable; g++) {
+                    const opt = document.createElement('option');
+                    opt.value = g;
+                    opt.textContent = `${g} ${g === 1 ? 'Guest' : 'Guests'}`;
+                    if (g === Math.min(currentVal, maxSelectable)) {
+                        opt.selected = true;
+                    }
+                    select.appendChild(opt);
+                }
+            });
+        }
+
+        function getSelectedExperiences() {
+            const selected = [];
+            let expTotalAmount = 0;
+
+            expCheckboxes.forEach(cb => {
+                const item = cb.closest('.booking-exp-item');
+                const expId = cb.getAttribute('data-id');
+                const guestSelector = document.getElementById(`guestSelector_${expId}`);
+                const guestSelect = document.getElementById(`expGuests_${expId}`);
+                const subtotalBadge = document.getElementById(`expSubtotal_${expId}`);
+
+                if (cb.checked) {
+                    if (item) item.classList.add('selected');
+                    if (guestSelector) guestSelector.style.display = 'flex';
+
+                    const price = parseFloat(cb.getAttribute('data-price')) || 0;
+                    const name = cb.getAttribute('data-name') || '';
+                    const guests = parseInt(guestSelect?.value) || 1;
+                    const itemTotal = price * guests;
+
+                    if (subtotalBadge) {
+                        subtotalBadge.textContent = `₱${itemTotal.toLocaleString()}`;
+                    }
+
+                    expTotalAmount += itemTotal;
+                    selected.push({
+                        id: expId,
+                        name: name,
+                        guests: guests,
+                        price: price,
+                        total: itemTotal,
+                    });
+                } else {
+                    if (item) item.classList.remove('selected');
+                    if (guestSelector) guestSelector.style.display = 'none';
+                }
+            });
+
+            return { selected, total: expTotalAmount };
+        }
+
+        expCheckboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+                updateBookingSummary();
+            });
+        });
+
+        expGuestSelects.forEach(sel => {
+            sel.addEventListener('change', () => {
+                updateBookingSummary();
+            });
+        });
 
         bookCheckin.addEventListener('change', () => {
             bookCheckout.setAttribute('min', bookCheckin.value);
@@ -177,10 +257,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Listen to guest count changes
         bookAdults.addEventListener('change', () => {
             updateAdditionalGuests();
+            syncExperienceGuestOptions();
             updateBookingSummary();
         });
         bookChildren.addEventListener('change', () => {
             updateAdditionalGuests();
+            syncExperienceGuestOptions();
             updateBookingSummary();
         });
 
@@ -231,15 +313,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Initialize additional guests on load
+        // Initialize additional guests and experience guest options on load
         updateAdditionalGuests();
+        syncExperienceGuestOptions();
 
         // Update Booking Summary
         function updateBookingSummary() {
             const selectedOption = bookRoomType.options[bookRoomType.selectedIndex];
             const price = parseFloat(selectedOption.getAttribute('data-price')) || 0;
-            const roomName = selectedOption.getAttribute('data-name') || '—';
-            const badge = selectedOption.getAttribute('data-badge') || '—';
+            const roomName = selectedOption.getAttribute('data-name') || '-';
+            const badge = selectedOption.getAttribute('data-badge') || '-';
             const image = selectedOption.getAttribute('data-image') || '';
 
             // Update room info
@@ -247,23 +330,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (summaryRoomBadge) summaryRoomBadge.textContent = badge;
 
             // Update room image
-        if (summaryRoomImage) {
-             if (image) {
-                  summaryRoomImage.innerHTML = `<img src="${image}" alt="${roomName}" loading="lazy">`;
+            if (summaryRoomImage) {
+                if (image) {
+                    summaryRoomImage.innerHTML = `<img src="${image}" alt="${roomName}" loading="lazy">`;
 
-            summaryRoomImage.onclick = () => {
-                 const lightbox = document.getElementById('imageLightbox');
-                const lightboxImage = document.getElementById('lightboxImage');
+                    summaryRoomImage.onclick = () => {
+                        const lightbox = document.getElementById('imageLightbox');
+                        const lightboxImage = document.getElementById('lightboxImage');
 
-                 lightboxImage.src = image;
-                    lightbox.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-        };
-    } else {
-        summaryRoomImage.innerHTML = '<span class="summary-room-placeholder">[ Selected Room Image ]</span>';
-        summaryRoomImage.onclick = null;
-    }
-}
+                        lightboxImage.src = image;
+                        lightbox.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    };
+                } else {
+                    summaryRoomImage.innerHTML = '<span class="summary-room-placeholder">[ Selected Room Image ]</span>';
+                    summaryRoomImage.onclick = null;
+                }
+            }
 
             // Calculate nights
             let nights = 0;
@@ -280,9 +363,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     const ciDate = new Date(bookCheckin.value);
                     const coDate = new Date(bookCheckout.value);
                     const opts = { month: 'short', day: 'numeric', year: 'numeric' };
-                    summaryDates.innerHTML = `${ciDate.toLocaleDateString('en-US', opts)} – ${coDate.toLocaleDateString('en-US', opts)}<br>${nights} Night${nights > 1 ? 's' : ''}`;
+                    summaryDates.innerHTML = `${ciDate.toLocaleDateString('en-US', opts)} to ${coDate.toLocaleDateString('en-US', opts)}<br>${nights} Night${nights > 1 ? 's' : ''}`;
                 } else {
-                    summaryDates.innerHTML = '<span>—</span>';
+                    summaryDates.innerHTML = '<span>-</span>';
                 }
             }
 
@@ -296,11 +379,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 summaryGuestsText.textContent = parts.join(', ');
             }
 
+            // Calculate experiences
+            const expData = getSelectedExperiences();
+            const experiencesTotal = expData.total;
+
             // Calculate prices
             const subtotal = price * nights;
             const tax = Math.round(subtotal * 0.12);
             const resortFee = 500;
-            const total = subtotal + tax + resortFee;
+            const total = subtotal + tax + resortFee + experiencesTotal;
 
             // Format currency
             const fmt = (n) => '₱' + n.toLocaleString();
@@ -309,6 +396,26 @@ document.addEventListener('DOMContentLoaded', () => {
             if (summarySubtotal) summarySubtotal.textContent = fmt(subtotal);
             if (summaryTax) summaryTax.textContent = fmt(tax);
             if (summaryResortFee) summaryResortFee.textContent = fmt(resortFee);
+
+            // Update experiences row in summary
+            if (summaryExperiencesRow && summaryExperiencesTotal && summaryExperiencesList) {
+                if (expData.selected.length > 0) {
+                    summaryExperiencesRow.style.display = 'flex';
+                    summaryExperiencesTotal.textContent = fmt(experiencesTotal);
+                    summaryExperiencesList.style.display = 'flex';
+                    summaryExperiencesList.innerHTML = expData.selected.map(item => `
+                        <div class="summary-exp-line">
+                            <span>- ${item.name} (${item.guests} ${item.guests === 1 ? 'guest' : 'guests'})</span>
+                            <span>${fmt(item.total)}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    summaryExperiencesRow.style.display = 'none';
+                    summaryExperiencesList.style.display = 'none';
+                    summaryExperiencesList.innerHTML = '';
+                }
+            }
+
             if (summaryTotal) summaryTotal.textContent = fmt(total);
 
             // Highlight selected room in list
@@ -379,17 +486,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     const co = new Date(bookCheckout.value);
                     nights = Math.max(0, Math.round((co - ci) / (1000 * 60 * 60 * 24)));
                 }
+                const expData = getSelectedExperiences();
+                const experiencesTotal = expData.total;
                 const subtotal = roomPrice * nights;
                 const tax = Math.round(subtotal * 0.12);
                 const resortFee = 500;
-                const total = subtotal + tax + resortFee;
+                const total = subtotal + tax + resortFee + experiencesTotal;
 
                 // Submit to server
                 confirmBtn.disabled = true;
                 confirmBtn.textContent = 'Processing...';
 
                 try {
-                    const response = await fetch('../api/process_booking.php', {
+                    const apiEndpoint = window.location.pathname.includes('/pages/') ? '../../api/process_booking.php' : 'api/process_booking.php';
+                    const response = await fetch(apiEndpoint, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -404,6 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             additional_guests: additionalGuests,
                             payment_method: paymentMethod,
                             special_requests: specialRequests,
+                            experiences: expData.selected,
                             total_amount: total,
                         }),
                     });
@@ -418,6 +529,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         const dateOpts = { month: 'short', day: 'numeric', year: 'numeric' };
 
                         if (modalDetails) {
+                            let expModalHtml = '';
+                            if (expData.selected.length > 0) {
+                                const expNames = expData.selected.map(e => `${e.name} (${e.guests})`).join(', ');
+                                expModalHtml = `
+                                    <div class="modal-detail-row">
+                                        <span class="modal-detail-label">Experiences</span>
+                                        <span class="modal-detail-value">${expNames}</span>
+                                    </div>
+                                `;
+                            }
+
                             modalDetails.innerHTML = `
                                 <div class="modal-detail-row">
                                     <span class="modal-detail-label">Reservation ID</span>
@@ -429,12 +551,13 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </div>
                                 <div class="modal-detail-row">
                                     <span class="modal-detail-label">Dates</span>
-                                    <span class="modal-detail-value">${ciDate.toLocaleDateString('en-US', dateOpts)} – ${coDate.toLocaleDateString('en-US', dateOpts)}</span>
+                                    <span class="modal-detail-value">${ciDate.toLocaleDateString('en-US', dateOpts)} to ${coDate.toLocaleDateString('en-US', dateOpts)}</span>
                                 </div>
                                 <div class="modal-detail-row">
                                     <span class="modal-detail-label">Guests</span>
                                     <span class="modal-detail-value">${adults} Adult${adults > 1 ? 's' : ''}, ${children} Child${children !== 1 ? 'ren' : ''}</span>
                                 </div>
+                                ${expModalHtml}
                                 <div class="modal-detail-row modal-detail-total">
                                     <span class="modal-detail-label">Total</span>
                                     <span class="modal-detail-value">${fmt(total)}</span>

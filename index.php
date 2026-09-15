@@ -22,11 +22,11 @@ require_once __DIR__ . '/functions&val/function.php';
 
     $navLinks = [
         ['label' => 'Home', 'url' => '#home'],
-        ['label' => 'Rooms', 'url' => 'pages/rooms.php'],
-        ['label' => 'Booking', 'url' => 'pages/booking.php'],
-        ['label' => 'Dining', 'url' => 'pages/dining.php'],
-        ['label' => 'Experiences', 'url' => 'pages/experiences.php'],
-        ['label' => 'Contact', 'url' => 'pages/contact.php'],
+        ['label' => 'Rooms', 'url' => 'pages/rooms/'],
+        ['label' => 'Booking', 'url' => 'pages/booking/'],
+        ['label' => 'Dining', 'url' => 'pages/dining/'],
+        ['label' => 'Experiences', 'url' => 'pages/experiences/'],
+        ['label' => 'Contact', 'url' => 'pages/contact/'],
     ];
 
     $features = [
@@ -118,11 +118,11 @@ require_once __DIR__ . '/functions&val/function.php';
 
     $quickLinks = [
         ['label' => 'Home', 'url' => '#home'],
-        ['label' => 'Rooms & Suites', 'url' => 'pages/rooms.php'],
-        ['label' => 'Make a Booking', 'url' => 'pages/booking.php'],
-        ['label' => 'Dining & Cuisines', 'url' => 'pages/dining.php'],
-        ['label' => 'Experiences', 'url' => 'pages/experiences.php'],
-        ['label' => 'Contact Us', 'url' => 'pages/contact.php'],
+        ['label' => 'Rooms & Suites', 'url' => 'pages/rooms/'],
+        ['label' => 'Make a Booking', 'url' => 'pages/booking/'],
+        ['label' => 'Dining & Cuisines', 'url' => 'pages/dining/'],
+        ['label' => 'Experiences', 'url' => 'pages/experiences/'],
+        ['label' => 'Contact Us', 'url' => 'pages/contact/'],
         ['label' => 'Staff Login', 'url' => 'admin/login.php'],
     ];
 
@@ -163,7 +163,7 @@ require_once __DIR__ . '/functions&val/function.php';
             'room_type' => $roomType,
         ];
 
-        redirect('pages/booking.php');
+        redirect('pages/booking/');
     }
 
     $availabilityFlash = get_flash_message();
@@ -185,12 +185,12 @@ require_once __DIR__ . '/functions&val/function.php';
             <?php endforeach; ?>
         </ul>
 
-        <a href="pages/booking.php" class="btn-book-now">Book Now</a>
+        <a href="pages/booking/" class="btn-book-now">Book Now</a>
 
         <?php if (is_logged_in()): ?>
-            <a href="pages/success.php" class="btn-login">My Account</a>
+            <a href="pages/account/" class="btn-login">My Account</a>
         <?php else: ?>
-            <a href="pages/info.php" class="btn-login">Login</a>
+            <a href="pages/login/" class="btn-login">Login</a>
         <?php endif; ?>
 
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
@@ -288,7 +288,7 @@ require_once __DIR__ . '/functions&val/function.php';
                         <p class="room-specs"><?= htmlspecialchars($room['specs']) ?></p>
                         <div class="room-card-bottom">
                             <p class="room-price"><?= $room['price'] ?> <span>/ night</span></p>
-                            <a href="pages/room-detail.php?room=<?= urlencode($room['slug']) ?>" class="btn-room-detail">Details</a>
+                            <a href="pages/room-detail/?room=<?= urlencode($room['slug']) ?>" class="btn-room-detail">Details</a>
                         </div>
                     </div>
                 </div>
@@ -296,7 +296,7 @@ require_once __DIR__ . '/functions&val/function.php';
         </div>
 
         <div class="view-all-wrapper">
-            <a href="pages/rooms.php" class="btn-view-all">View All Rooms</a>
+            <a href="pages/rooms/" class="btn-view-all">View All Rooms</a>
         </div>
     </div>
 </section>

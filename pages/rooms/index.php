@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../functions&val/function.php';
+require_once __DIR__ . '/../../functions&val/function.php';
 
 $resortName = "Ejercito's Sunscape Resort";
 $rooms = [
@@ -118,28 +118,29 @@ $hasFilters = $selectedType !== 'all' || $selectedPrice !== 'all' || $selectedGu
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="inner-page">
 <nav class="navbar">
     <div class="navbar-inner">
-        <a href="../index.php" class="navbar-brand">
-            <div class="brand-icon customizable-logo"><img src="../assets/images/LGO.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></div>
+        <a href="../../" class="navbar-brand">
+            <div class="brand-icon customizable-logo"><img src="../../assets/images/LGO.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></div>
             <span class="brand-text"><?= htmlspecialchars($resortName) ?></span>
         </a>
         <ul class="navbar-links">
-            <li><a href="../index.php">Home</a></li>
-            <li><a href="rooms.php" class="active">Rooms</a></li>
-            <li><a href="booking.php">Booking</a></li>
-            <li><a href="dining.php">Dining</a></li>
-            <li><a href="experiences.php">Experiences</a></li>
-            <li><a href="contact.php">Contact</a></li>
+            <li><a href="../../">Home</a></li>
+            <li><a href="../rooms/" class="active">Rooms</a></li>
+            <li><a href="../booking/">Booking</a></li>
+            <li><a href="../dining/">Dining</a></li>
+            <li><a href="../experiences/">Experiences</a></li>
+            <li><a href="../contact/">Contact</a></li>
         </ul>
-        <a href="booking.php" class="btn-book-now">Book Now</a>
+        <a href="../booking/" class="btn-book-now">Book Now</a>
         <?php if (is_logged_in()): ?>
-            <a href="success.php" class="btn-login">My Account</a>
+            <a href="../account/" class="btn-login">My Account</a>
         <?php else: ?>
-            <a href="info.php" class="btn-login">Login</a>
+            <a href="../login/" class="btn-login">Login</a>
         <?php endif; ?>
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
@@ -154,7 +155,7 @@ $hasFilters = $selectedType !== 'all' || $selectedPrice !== 'all' || $selectedGu
 
     <section class="rooms-page-section">
         <div class="container">
-            <form class="room-filters" method="GET" action="rooms.php" aria-label="Room filters">
+            <form class="room-filters" method="GET" action="index.php" aria-label="Room filters">
                 <label>
                     <span>Room Type</span>
                     <select name="type" onchange="this.form.submit()">
@@ -194,13 +195,13 @@ $hasFilters = $selectedType !== 'all' || $selectedPrice !== 'all' || $selectedGu
                 </label>
             </form>
             <?php if ($hasFilters): ?>
-                <p class="room-filter-status">Showing <?= count($filteredRooms) ?> of <?= count($rooms) ?> rooms. <a href="rooms.php">Clear filters</a></p>
+                <p class="room-filter-status">Showing <?= count($filteredRooms) ?> of <?= count($rooms) ?> rooms. <a href="../rooms/">Clear filters</a></p>
             <?php endif; ?>
             <div class="rooms-page-grid">
                 <?php foreach ($filteredRooms as $room): ?>
                     <article class="room-page-card">
                         <div class="room-page-image-wrap">
-                            <span class="room-badge suite"><?= htmlspecialchars($room['badge']) ?></span>
+                            <span class="room-badge <?= strtolower($room['badge']) ?>"><?= htmlspecialchars($room['badge']) ?></span>
                             <img src="<?= htmlspecialchars($room['image']) ?>" alt="<?= htmlspecialchars($room['name']) ?>" loading="lazy">
                         </div>
                         <div class="room-page-content">
@@ -210,8 +211,8 @@ $hasFilters = $selectedType !== 'all' || $selectedPrice !== 'all' || $selectedGu
                             <div class="room-page-bottom">
                                 <p class="room-price"><?= htmlspecialchars($room['price']) ?> <span>/ night</span></p>
                                 <div>
-                                    <a href="room-detail.php?room=<?= urlencode($room['slug']) ?>" class="btn-view-details btn-outline">Details</a>
-                                    <a href="booking.php" class="btn-view-details">Book Now</a>
+                                    <a href="../room-detail/?room=<?= urlencode($room['slug']) ?>" class="btn-view-details btn-outline">Details</a>
+                                    <a href="../booking/" class="btn-view-details">Book Now</a>
                                 </div>
                             </div>
                         </div>
@@ -219,7 +220,7 @@ $hasFilters = $selectedType !== 'all' || $selectedPrice !== 'all' || $selectedGu
                 <?php endforeach; ?>
             </div>
             <?php if (empty($filteredRooms)): ?>
-                <p class="room-filter-empty">No rooms match these filters. <a href="rooms.php">View all rooms</a></p>
+                <p class="room-filter-empty">No rooms match these filters. <a href="../rooms/">View all rooms</a></p>
             <?php endif; ?>
         </div>
     </section>
@@ -229,17 +230,17 @@ $hasFilters = $selectedType !== 'all' || $selectedPrice !== 'all' || $selectedGu
     <div class="container">
         <div class="footer-grid">
             <div class="footer-brand-block">
-                <div class="footer-brand-header"><span class="footer-brand-icon"><img src="../assets/images/LGO2.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></span></div>
+                <div class="footer-brand-header"><span class="footer-brand-icon"><img src="../../assets/images/LGO2.svg" alt="<?= htmlspecialchars($resortName) ?> logo"></span></div>
                 <div class="footer-brand-name"><?= htmlspecialchars($resortName) ?></div>
                 <p class="footer-tagline">"Where the sun meets the shore..."</p>
                 <div class="footer-contact">Tambisan, San Juan, Siquijor, Philippines<br>+63 912 345 6789<br>reservejersunscape@gmail.com</div>
             </div>
-            <div><h4 class="footer-heading">Quick Links</h4><ul class="footer-links"><li><a href="../index.php">Home</a></li><li><a href="rooms.php">Rooms &amp; Suites</a></li><li><a href="dining.php">Dining &amp; Cuisines</a></li><li><a href="booking.php">Make a Booking</a></li></ul></div>
+            <div><h4 class="footer-heading">Quick Links</h4><ul class="footer-links"><li><a href="../../">Home</a></li><li><a href="../rooms/">Rooms &amp; Suites</a></li><li><a href="../dining/">Dining &amp; Cuisines</a></li><li><a href="../booking/">Make a Booking</a></li></ul></div>
             <div><h4 class="footer-heading">Follow Us</h4><ul class="footer-links"><li><a href="#">Facebook</a></li><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li></ul></div>
         </div>
         <div class="footer-bottom"><p>&copy; <?= date('Y') ?> <?= htmlspecialchars($resortName) ?>. All rights reserved.</p></div>
     </div>
 </footer>
-<script src="../script.js"></script>
+<script src="../../script.js"></script>
 </body>
 </html>

@@ -79,13 +79,14 @@ img {
 }
 
 .navbar-inner {
-    max-width: var(--max-width);
+    max-width: 1420px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    height: 128px;
+    height: 148px;
+    position: relative;
 }
 
 .navbar-brand {
@@ -96,8 +97,8 @@ img {
 }
 
 .brand-icon {
-    width: 108px;
-    height: 108px;
+    width: 84px;
+    height: 132px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -110,20 +111,20 @@ img {
 }
 
 .brand-icon img {
-    width: 84px;
-    height: 102px;
+    width: 68px;
+    height: 128px;
     object-fit: contain;
 }
 
 .brand-text {
     font-family: var(--font-display);
-    font-size: 1.42rem;
+    font-size: 1.65rem;
     color: var(--color-forest-dark);
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 600;
     line-height: 1.25;
-    max-width: 340px;
+    max-width: 390px;
 }
 
 .navbar-links {
@@ -132,7 +133,10 @@ img {
     justify-content: center;
     gap: 24px;
     list-style: none;
-    flex: 1;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
 }
 
 .navbar-links a {
@@ -175,6 +179,7 @@ img {
     transition: all 0.3s ease;
     cursor: pointer;
     flex-shrink: 0;
+    margin-left: auto;
 }
 
 .btn-book-now:hover {
@@ -259,22 +264,31 @@ img {
     .navbar {
         padding: 0 16px;
     }
+
     .navbar-inner {
         position: relative;
         height: 72px;
     }
+
+    .navbar-brand {
+        margin-left: 0;
+    }
+
     .brand-icon {
         width: 56px;
         height: 56px;
     }
+
     .brand-icon img {
         width: 44px;
         height: 54px;
     }
+
     .brand-text {
         font-size: 0.95rem;
         max-width: 160px;
     }
+
     .navbar-links {
         display: none;
         flex-direction: column;
@@ -283,34 +297,43 @@ img {
         top: 100%;
         left: 0;
         right: 0;
+        transform: none;
+        width: auto;
         padding: 24px 20px;
         gap: 8px;
         z-index: 999;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     }
+
     .navbar-links.open {
         display: flex;
     }
+
     .navbar-links li {
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         padding: 10px 0;
     }
+
     .navbar-links li:last-child {
         border-bottom: none;
     }
+
     .navbar-links a {
         font-size: 1rem;
         color: var(--color-cream) !important;
         font-weight: 500;
         letter-spacing: 0.5px;
     }
+
     .navbar-links a::after {
         display: none;
     }
+
     .btn-book-now,
     .btn-login {
         display: none;
     }
+
     .menu-toggle {
         display: flex;
     }
@@ -803,6 +826,10 @@ img {
     text-transform: uppercase;
     letter-spacing: 3px;
     margin-bottom: 12px;
+.overview-paragraphs p {
+    text-align: justify;
+    text-justify: inter-word;
+}
 }
 
 .brands-title-line {

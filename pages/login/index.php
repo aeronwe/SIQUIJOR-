@@ -1,15 +1,17 @@
 <?php
 
-require_once __DIR__ . '/../functions&val/function.php';
-require_once __DIR__ . '/../functions&val/validation.php';
+require_once __DIR__ . '/../../functions&val/function.php';
+require_once __DIR__ . '/../../functions&val/validation.php';
 
 if (is_logged_in()) {
-    redirect('success.php');
+    redirect('../account/');
 }
 
-$redirect_after_login = $_GET['redirect'] ?? 'success.php';
-if (!in_array($redirect_after_login, ['success.php', 'booking.php'], true)) {
-    $redirect_after_login = 'success.php';
+$raw_redirect = $_GET['redirect'] ?? '';
+if (in_array($raw_redirect, ['booking', 'booking.php', '../booking/', 'pages/booking.php'], true)) {
+    $redirect_after_login = '../booking/';
+} else {
+    $redirect_after_login = '../account/';
 }
 
 $errors = [];
@@ -51,7 +53,8 @@ $flash = get_flash_message();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="auth-body">
 
@@ -65,20 +68,20 @@ $flash = get_flash_message();
 <div class="auth-grain-overlay"></div>
 
 <!-- Decorative palm trees -->
-<img class="auth-bg-palm auth-bg-palm--left" src="../assets/images/palm-bg.svg" alt="" aria-hidden="true">
-<img class="auth-bg-palm auth-bg-palm--right" src="../assets/images/palm-bg.svg" alt="" aria-hidden="true">
-<img class="auth-bg-palm auth-bg-palm--center-left" src="../assets/images/palm-bg.svg" alt="" aria-hidden="true">
-<img class="auth-bg-palm auth-bg-palm--center-right" src="../assets/images/palm-bg.svg" alt="" aria-hidden="true">
+<img class="auth-bg-palm auth-bg-palm--left" src="../../assets/images/palm-bg.svg" alt="" aria-hidden="true">
+<img class="auth-bg-palm auth-bg-palm--right" src="../../assets/images/palm-bg.svg" alt="" aria-hidden="true">
+<img class="auth-bg-palm auth-bg-palm--center-left" src="../../assets/images/palm-bg.svg" alt="" aria-hidden="true">
+<img class="auth-bg-palm auth-bg-palm--center-right" src="../../assets/images/palm-bg.svg" alt="" aria-hidden="true">
 
 <main class="auth-page-wrap">
     <div class="auth-card">
         <div class="auth-card-body">
             <!-- Left: Branding Panel -->
             <section class="auth-panel-brand">
-                <img class="auth-resort-logo" src="../assets/images/LGO.svg" alt="Ejercito's Sunscape Resort logo">
+                <img class="auth-resort-logo" src="../../assets/images/LGO.svg" alt="Ejercito's Sunscape Resort logo">
                 <p class="auth-hotel-name">Ejercito's Sunscape Resort</p>
                 <p class="auth-tagline">Where the sun meets the shore...</p>
-                <img class="auth-wave" src="../assets/images/wave.svg" alt="" aria-hidden="true">
+                <img class="auth-wave" src="../../assets/images/wave.svg" alt="" aria-hidden="true">
                 <p class="auth-greek-line">"Maligayang pagdating"</p>
                 <p class="auth-greek-line-sub">Welcome, traveler</p>
             </section>
@@ -87,8 +90,8 @@ $flash = get_flash_message();
             <section class="auth-panel-form">
                 <!-- Tab-style navigation -->
                 <div class="auth-tabs">
-                    <a href="info.php?redirect=<?= urlencode($redirect_after_login) ?>" class="auth-tab active">Login</a>
-                    <a href="Signup.php?redirect=<?= urlencode($redirect_after_login) ?>" class="auth-tab">Sign Up</a>
+                    <a href="../login/?redirect=<?= urlencode($redirect_after_login) ?>" class="auth-tab active">Login</a>
+                    <a href="../signup/?redirect=<?= urlencode($redirect_after_login) ?>" class="auth-tab">Sign Up</a>
                     <div class="auth-tab-indicator" aria-hidden="true"></div>
                 </div>
 
@@ -108,7 +111,7 @@ $flash = get_flash_message();
                     </div>
                 <?php endif; ?>
 
-                <form class="auth-form" method="POST" action="info.php?redirect=<?= urlencode($redirect_after_login) ?>" id="loginForm">
+                <form class="auth-form" method="POST" action="index.php?redirect=<?= urlencode($redirect_after_login) ?>" id="loginForm">
                     <h2>Welcome Back</h2>
                     <p class="auth-form-sub">Sign in to manage your stay</p>
 
@@ -151,7 +154,7 @@ $flash = get_flash_message();
                     </div>
 
                     <button type="submit" class="auth-btn-primary" id="loginBtn">Sign In</button>
-                    <p class="auth-switch-text">Don't have an account? <a href="Signup.php?redirect=<?= urlencode($redirect_after_login) ?>">Sign Up</a></p>
+                    <p class="auth-switch-text">Don't have an account? <a href="../signup/?redirect=<?= urlencode($redirect_after_login) ?>">Sign Up</a></p>
                 </form>
             </section>
         </div>

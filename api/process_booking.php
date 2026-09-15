@@ -38,7 +38,28 @@ $children        = (int) ($input['children'] ?? 0);
 $additional_guests = $input['additional_guests'] ?? [];
 $payment_method  = sanitize_input($input['payment_method'] ?? '');
 $special_requests = sanitize_input($input['special_requests'] ?? '');
+$experiences_input = $input['experiences'] ?? [];
 $total_amount    = (float) ($input['total_amount'] ?? 0);
+
+// Format selected experiences into special requests note if present
+if (!empty($experiences_input) && is_array($experiences_input)) {
+    $exp_lines = [];
+    foreach ($experiences_input as $exp) {
+        $e_name  = sanitize_input($exp['name'] ?? '');
+        $e_count = (int) ($exp['guests'] ?? 1);
+        $e_cost  = (float) ($exp['total'] ?? 0);
+        if ($e_name) {
+            $guest_str = $e_count === 1 ? '1 guest' : "{$e_count} guests";
+            $exp_lines[] = "- {$e_name} ({$guest_str}: ₱" . number_format($e_cost, 2) . ")";
+        }
+    }
+    if (!empty($exp_lines)) {
+        $exp_note = "Selected Experiences:\n" . implode("\n", $exp_lines);
+        $special_requests = !empty($special_requests) 
+            ? $special_requests . "\n\n" . $exp_note 
+            : $exp_note;
+    }
+}
 
 // ── Validate ──
 $errors = [];
