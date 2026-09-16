@@ -110,11 +110,10 @@ $diningSpaces = [
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
                     </span>
                     <div>
-                        <h3>In-Room Dining: Available 24/7</h3>
-                        <p>Enjoy our full menu from the comfort of your room. Order anytime via phone on the resort website.</p>
+                        <h3>In-Room Dining: Available</h3>
+                        <p>Enjoy our full menu from the comfort of your room. Order anytime via room service telephone.</p>
                     </div>
                 </div>
-                <a href="#" class="btn-order-now">Order Now &rarr;</a>
             </div>
         </div>
     </section>

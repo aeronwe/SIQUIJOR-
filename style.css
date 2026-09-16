@@ -124,14 +124,15 @@ img {
     text-transform: uppercase;
     font-weight: 600;
     line-height: 1.25;
-    max-width: 390px;
+    width: 190px;
+    max-width: 190px;
 }
 
 .navbar-links {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 24px;
+    gap: 30px;
     list-style: none;
     position: absolute;
     left: 50%;
@@ -140,8 +141,8 @@ img {
 }
 
 .navbar-links a {
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.12rem;
+    font-weight: 600;
     color: var(--color-forest-dark);
     letter-spacing: 0.3px;
     transition: color 0.3s ease;
@@ -286,6 +287,7 @@ img {
 
     .brand-text {
         font-size: 0.95rem;
+        width: 160px;
         max-width: 160px;
     }
 
@@ -2972,16 +2974,17 @@ img {
 
     .brand-text {
         font-size: 1rem;
+        width: 190px;
         max-width: 220px;
     }
 
     .navbar-links {
-        gap: 14px;
+        gap: 18px;
     }
 
     .navbar-links a,
     .btn-book-now {
-        font-size: 0.82rem;
+        font-size: 0.9rem;
     }
 
     .btn-book-now {
