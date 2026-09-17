@@ -189,37 +189,39 @@ function get_service_by_id(PDO $pdo, int $id): ?array
     return $service ?: null;
 }
 
-function create_service(PDO $pdo, string $category, string $name, string $tag, string $description, string $hours, string $image_url): bool
+function create_service(PDO $pdo, string $category, string $name, string $tag, string $description, string $hours, string $image_url, float $price = 0.00): bool
 {
     $stmt = $pdo->prepare(
-        'INSERT INTO services (category, name, tag, description, hours, image_url)
-         VALUES (:category, :name, :tag, :description, :hours, :image_url)'
+        'INSERT INTO services (category, name, tag, description, hours, price, image_url)
+         VALUES (:category, :name, :tag, :description, :hours, :price, :image_url)'
     );
     return $stmt->execute([
-        'category' => $category,
-        'name' => $name,
-        'tag' => $tag,
+        'category'    => $category,
+        'name'        => $name,
+        'tag'         => $tag,
         'description' => $description,
-        'hours' => $hours,
-        'image_url' => $image_url,
+        'hours'       => $hours,
+        'price'       => $price,
+        'image_url'   => $image_url,
     ]);
 }
 
-function update_service(PDO $pdo, int $id, string $category, string $name, string $tag, string $description, string $hours, string $image_url): bool
+function update_service(PDO $pdo, int $id, string $category, string $name, string $tag, string $description, string $hours, string $image_url, float $price = 0.00): bool
 {
     $stmt = $pdo->prepare(
         'UPDATE services SET category = :category, name = :name, tag = :tag,
-         description = :description, hours = :hours, image_url = :image_url
+         description = :description, hours = :hours, price = :price, image_url = :image_url
          WHERE id = :id'
     );
     return $stmt->execute([
-        'category' => $category,
-        'name' => $name,
-        'tag' => $tag,
+        'category'    => $category,
+        'name'        => $name,
+        'tag'         => $tag,
         'description' => $description,
-        'hours' => $hours,
-        'image_url' => $image_url,
-        'id' => $id,
+        'hours'       => $hours,
+        'price'       => $price,
+        'image_url'   => $image_url,
+        'id'          => $id,
     ]);
 }
 
@@ -245,19 +247,21 @@ function create_reservation(
     ?string $additional_guests,
     string $payment_method,
     ?string $special_requests,
-    float $total_amount
+    float $total_amount,
+    ?int $room_id = null
 ): int {
     $stmt = $pdo->prepare(
         'INSERT INTO reservations
-         (user_id, full_name, email, phone, room_type, checkin_date, checkout_date,
+         (user_id, room_id, full_name, email, phone, room_type, checkin_date, checkout_date,
           adults, children, additional_guests, payment_method, special_requests, total_amount)
          VALUES
-         (:user_id, :full_name, :email, :phone, :room_type, :checkin_date, :checkout_date,
+         (:user_id, :room_id, :full_name, :email, :phone, :room_type, :checkin_date, :checkout_date,
           :adults, :children, :additional_guests, :payment_method, :special_requests, :total_amount)'
     );
 
     $stmt->execute([
         'user_id'           => $user_id,
+        'room_id'           => $room_id,
         'full_name'         => $full_name,
         'email'             => $email,
         'phone'             => $phone,
@@ -273,6 +277,19 @@ function create_reservation(
     ]);
 
     return (int) $pdo->lastInsertId();
+}
+
+function get_reservations_by_user_id(PDO $pdo, int $user_id): array
+{
+    $stmt = $pdo->prepare('
+        SELECT r.*, rm.image_url AS room_image, rm.badge AS room_badge
+        FROM reservations r
+        LEFT JOIN rooms rm ON r.room_id = rm.id
+        WHERE r.user_id = :user_id
+        ORDER BY r.created_at DESC
+    ');
+    $stmt->execute(['user_id' => $user_id]);
+    return $stmt->fetchAll();
 }
 
 // ── Admin Authentication ──────────────────────────────────

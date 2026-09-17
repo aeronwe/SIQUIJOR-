@@ -441,6 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const selectedOption = bookRoomType.options[bookRoomType.selectedIndex];
                 const roomName = selectedOption.getAttribute('data-name') || '';
+                const roomId = selectedOption.getAttribute('data-id') || null;
                 const roomPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
 
                 const adults = parseInt(bookAdults.value) || 1;
@@ -507,6 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             email: email,
                             phone: phone,
                             room_type: roomName,
+                            room_id: roomId,
                             checkin_date: bookCheckin.value,
                             checkout_date: bookCheckout.value,
                             adults: adults,

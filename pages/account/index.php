@@ -66,6 +66,7 @@ if (!$user) {
     redirect('info.php');
 }
 
+$userReservations = get_reservations_by_user_id($pdo, $user_id);
 $flash = get_flash_message();
 ?>
 <!DOCTYPE html>
@@ -162,6 +163,75 @@ $flash = get_flash_message();
                         <span class="user-info-value"><?= date('F j, Y · g:i A', strtotime($user['updated_at'])) ?></span>
                     </div>
                 </div>
+            </div>
+
+            <div class="reservations-section">
+                <div class="reservations-section-header">
+                    <h2 class="reservations-heading">My Bookings &amp; Reservations</h2>
+                    <a href="../booking/" class="btn-book-more">+ New Booking</a>
+                </div>
+
+                <?php if (empty($userReservations)): ?>
+                    <div class="empty-reservations-box">
+                        <p>You haven't made any room reservations yet.</p>
+                        <a href="../booking/" class="btn-auth" style="display:inline-block; max-width:220px; margin:0 auto; padding:10px 20px; text-decoration:none;">Book a Room &rarr;</a>
+                    </div>
+                <?php else: ?>
+                    <div class="reservations-list">
+                        <?php foreach ($userReservations as $res): 
+                            $statusClass = 'status-' . htmlspecialchars($res['status']);
+                            $ciDate = date('M j, Y', strtotime($res['checkin_date']));
+                            $coDate = date('M j, Y', strtotime($res['checkout_date']));
+                            $diffNights = (int) max(1, round((strtotime($res['checkout_date']) - strtotime($res['checkin_date'])) / (60 * 60 * 24)));
+                        ?>
+                            <div class="res-card">
+                                <div class="res-card-top">
+                                    <div class="res-room-info">
+                                        <h3><?= htmlspecialchars($res['room_type']) ?></h3>
+                                        <span class="res-id-badge">Reservation #<?= (int)$res['id'] ?> &middot; Booked on <?= date('M j, Y', strtotime($res['created_at'])) ?></span>
+                                    </div>
+                                    <span class="res-status-pill <?= $statusClass ?>">
+                                        <?= ucfirst(htmlspecialchars($res['status'])) ?>
+                                    </span>
+                                </div>
+
+                                <div class="res-grid-details">
+                                    <div class="res-detail-item">
+                                        <span class="res-detail-label">Check-In</span>
+                                        <span class="res-detail-value"><?= $ciDate ?></span>
+                                    </div>
+                                    <div class="res-detail-item">
+                                        <span class="res-detail-label">Check-Out</span>
+                                        <span class="res-detail-value"><?= $coDate ?></span>
+                                    </div>
+                                    <div class="res-detail-item">
+                                        <span class="res-detail-label">Duration</span>
+                                        <span class="res-detail-value"><?= $diffNights ?> Night<?= $diffNights > 1 ? 's' : '' ?></span>
+                                    </div>
+                                    <div class="res-detail-item">
+                                        <span class="res-detail-label">Guests</span>
+                                        <span class="res-detail-value"><?= (int)$res['adults'] ?> Adult<?= (int)$res['adults'] > 1 ? 's' : '' ?><?= (int)$res['children'] > 0 ? ', ' . (int)$res['children'] . ' Child' . ((int)$res['children'] > 1 ? 'ren' : '') : '' ?></span>
+                                    </div>
+                                    <div class="res-detail-item">
+                                        <span class="res-detail-label">Total Amount</span>
+                                        <span class="res-detail-value">₱<?= number_format((float)$res['total_amount'], 2) ?></span>
+                                    </div>
+                                    <div class="res-detail-item">
+                                        <span class="res-detail-label">Payment</span>
+                                        <span class="res-detail-value"><?= ucfirst(htmlspecialchars($res['payment_method'])) ?></span>
+                                    </div>
+                                </div>
+
+                                <?php if (!empty($res['special_requests'])): ?>
+                                    <div class="res-note">
+                                        <strong>Notes / Selected Experiences:</strong><br>
+                                        <?= nl2br(htmlspecialchars($res['special_requests'])) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div class="profile-section">

@@ -16,15 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tag      = sanitize_input($_POST['tag'] ?? '');
         $desc     = sanitize_input($_POST['description'] ?? '');
         $hours    = sanitize_input($_POST['hours'] ?? '');
+        $price    = (float)($_POST['price'] ?? 0);
         $imageUrl = sanitize_input($_POST['image_url'] ?? '');
 
         $allowedCategories = ['dining', 'experience', 'brand'];
         if ($name && in_array($category, $allowedCategories, true) && $imageUrl) {
             if ($editId > 0) {
-                update_service($pdo, $editId, $category, $name, $tag, $desc, $hours, $imageUrl);
+                update_service($pdo, $editId, $category, $name, $tag, $desc, $hours, $imageUrl, $price);
                 set_flash_message('success', "Service \"$name\" has been updated.");
             } else {
-                create_service($pdo, $category, $name, $tag, $desc, $hours, $imageUrl);
+                create_service($pdo, $category, $name, $tag, $desc, $hours, $imageUrl, $price);
                 set_flash_message('success', "Service \"$name\" has been added.");
             }
         } else {
@@ -152,6 +153,9 @@ $currentPage = 'services';
                                         <?php if ($svc['hours']): ?>
                                             <p class="admin-service-hours">Schedule: <?= htmlspecialchars($svc['hours']) ?></p>
                                         <?php endif; ?>
+                                        <?php if ((float)$svc['price'] > 0): ?>
+                                            <p style="font-size:0.85rem; font-weight:700; color:var(--admin-gold); margin-bottom:8px;">₱<?= number_format((float)$svc['price'], 2) ?><span style="font-size:0.75rem; font-weight:400; color:var(--admin-text-dim);"> / person</span></p>
+                                        <?php endif; ?>
                                         <?php if ($svc['description']): ?>
                                             <p style="font-size:0.78rem; color:var(--admin-text-dim); margin-bottom:10px; line-height:1.5;"><?= htmlspecialchars(mb_strimwidth($svc['description'], 0, 100, '...')) ?></p>
                                         <?php endif; ?>
@@ -165,6 +169,7 @@ $currentPage = 'services';
                                                 data-field-tag="<?= htmlspecialchars($svc['tag'] ?? '') ?>"
                                                 data-field-description="<?= htmlspecialchars($svc['description'] ?? '') ?>"
                                                 data-field-hours="<?= htmlspecialchars($svc['hours'] ?? '') ?>"
+                                                data-field-price="<?= htmlspecialchars($svc['price'] ?? '0.00') ?>"
                                                 data-field-image_url="<?= htmlspecialchars($svc['image_url']) ?>">
                                                 Edit
                                             </button>
@@ -213,6 +218,10 @@ $currentPage = 'services';
                 <div class="form-group">
                     <label for="svcHours">Operating Hours / Schedule</label>
                     <input type="text" id="svcHours" name="hours" placeholder="e.g. 5:00 PM – 12:00 AM daily">
+                </div>
+                <div class="form-group">
+                    <label for="svcPrice">Price (₱, optional / per guest)</label>
+                    <input type="number" id="svcPrice" name="price" step="0.01" min="0" placeholder="0.00">
                 </div>
                 <div class="form-group">
                     <label for="svcDesc">Description</label>

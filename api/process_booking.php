@@ -115,6 +115,17 @@ try {
     $pdo = getConnection();
 
     $user_id = (int) $_SESSION['user_id'];
+    $room_id = !empty($input['room_id']) ? (int) $input['room_id'] : null;
+
+    if (!$room_id && $room_type) {
+        $stmtRoom = $pdo->prepare('SELECT id FROM rooms WHERE name = :name LIMIT 1');
+        $stmtRoom->execute(['name' => $room_type]);
+        $foundRoomId = $stmtRoom->fetchColumn();
+        if ($foundRoomId) {
+            $room_id = (int) $foundRoomId;
+        }
+    }
+
     $guests_json = !empty($valid_guests) ? json_encode($valid_guests) : null;
 
     $reservation_id = create_reservation(
@@ -131,7 +142,8 @@ try {
         $guests_json,
         $payment_method,
         $special_requests ?: null,
-        $total_amount
+        $total_amount,
+        $room_id
     );
 
     echo json_encode([

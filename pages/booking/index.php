@@ -8,43 +8,107 @@ if (!is_logged_in()) {
 
 $resortName = "Ejercito's Sunscape Resort";
 
-$roomTypes = [
-    ['name' => 'Standard Twin Room',   'badge' => 'Standard', 'price' => 3200,  'image' => 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80'],
-    ['name' => 'Deluxe Garden View',   'badge' => 'Deluxe',   'price' => 4500,  'image' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80'],
-    ['name' => 'Premier Ocean Suite',  'badge' => 'Suite',    'price' => 8200,  'image' => 'https://a0.muscache.com/im/pictures/hosting/Hosting-22680436/original/42f1ab5b-f7fb-4287-ba13-e34f1758563d.jpeg?im_w=1200'],
-    ['name' => 'Family Beach Villa',   'badge' => 'Villa',    'price' => 12500, 'image' => 'https://images.squarespace-cdn.com/content/v1/5b4f0c8d89c17294e53d4ffc/1532678056046-2I393HL258IGMVG5LB7Z/351bbf9b32ea226d4294d111dad38ed0.jpg?format=2500w'],
-    ['name' => 'Honeymoon Paradise Suite', 'badge' => 'Premium', 'price' => 15000, 'image' => 'https://media.cntraveller.com/photos/611bf43e69410e829d87eb1a/16:9/w_1920,c_limit/pangulasian_cnt_17sept12_pr.jpg'],
-];
+$roomTypes = [];
+try {
+    $pdo = getConnection();
+    $dbRooms = get_all_rooms($pdo);
+    if (!empty($dbRooms)) {
+        foreach ($dbRooms as $r) {
+            $roomTypes[] = [
+                'id'    => (int) $r['id'],
+                'name'  => $r['name'],
+                'badge' => $r['badge'],
+                'price' => (float) $r['price'],
+                'image' => $r['image_url'],
+            ];
+        }
+    }
+} catch (Exception $e) {
+    // Handled below if empty
+}
 
-$experiences = [
-    [
-        'id' => 'malaya-tours',
-        'name' => 'Malaya Tours Island Hopping Adventure',
-        'badge' => 'Full Day',
-        'price' => 3500,
-        'description' => 'Explore hidden coves, sandbars, and snorkeling spots around Siquijor.',
-        'image' => '../../assets/images/island_hopping.jpg',
-        'page' => '../malaya-tours/',
-    ],
-    [
-        'id' => 'island-bar',
-        'name' => 'Island Bar & Clvb',
-        'badge' => '2 Hours',
-        'price' => 800,
-        'description' => 'Party together while on vacation with DJ, drinks, and good vibes.',
-        'image' => '../../assets/images/island_bar.jpg',
-        'page' => '../island-bar/',
-    ],
-    [
-        'id' => 'coast-grill',
-        'name' => 'Coast Grilled Nights',
-        'badge' => '3 Hours',
-        'price' => 500,
-        'description' => 'Freshly grilled seafood and meat while enjoying the night.',
-        'image' => '../../assets/images/Beach-BBQ-9.jpg',
-        'page' => '../beach-bbq/',
-    ],
-];
+if (empty($roomTypes)) {
+    $roomTypes = [
+        ['id' => 1, 'name' => 'Standard Twin Room',   'badge' => 'Standard', 'price' => 3200,  'image' => 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80'],
+        ['id' => 2, 'name' => 'Deluxe Garden View',   'badge' => 'Deluxe',   'price' => 4500,  'image' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80'],
+        ['id' => 3, 'name' => 'Premier Ocean Suite',  'badge' => 'Suite',    'price' => 8200,  'image' => 'https://a0.muscache.com/im/pictures/hosting/Hosting-22680436/original/42f1ab5b-f7fb-4287-ba13-e34f1758563d.jpeg?im_w=1200'],
+        ['id' => 4, 'name' => 'Family Beach Villa',   'badge' => 'Villa',    'price' => 12500, 'image' => 'https://images.squarespace-cdn.com/content/v1/5b4f0c8d89c17294e53d4ffc/1532678056046-2I393HL258IGMVG5LB7Z/351bbf9b32ea226d4294d111dad38ed0.jpg?format=2500w'],
+        ['id' => 5, 'name' => 'Honeymoon Paradise Suite', 'badge' => 'Premium', 'price' => 15000, 'image' => 'https://media.cntraveller.com/photos/611bf43e69410e829d87eb1a/16:9/w_1920,c_limit/pangulasian_cnt_17sept12_pr.jpg'],
+    ];
+}
+
+$experiences = [];
+try {
+    if (!isset($pdo)) {
+        $pdo = getConnection();
+    }
+    $dbServices = get_all_services($pdo);
+    foreach ($dbServices as $s) {
+        if ((float)$s['price'] > 0 || in_array((int)$s['id'], [3, 4, 6])) {
+            $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $s['name'])));
+            $page = '../experiences/';
+            if (stripos($s['name'], 'malaya') !== false) {
+                $page = '../malaya-tours/';
+            } elseif (stripos($s['name'], 'bar') !== false) {
+                $page = '../island-bar/';
+            } elseif (stripos($s['name'], 'grill') !== false || stripos($s['name'], 'bbq') !== false) {
+                $page = '../beach-bbq/';
+            } elseif (stripos($s['name'], 'juwan') !== false) {
+                $page = '../el-juwan/';
+            }
+
+            $badge = $s['tag'] ?: 'Experience';
+            if ($s['hours']) {
+                $badge = $s['hours'];
+            }
+
+            $experiences[] = [
+                'id'          => $slug,
+                'service_id'  => (int)$s['id'],
+                'name'        => $s['name'],
+                'badge'       => $badge,
+                'price'       => (float) $s['price'] ?: 500,
+                'description' => $s['description'] ?: '',
+                'image'       => $s['image_url'],
+                'page'        => $page,
+            ];
+        }
+    }
+} catch (Exception $e) {
+    // Handled below if empty
+}
+
+if (empty($experiences)) {
+    $experiences = [
+        [
+            'id' => 'malaya-tours',
+            'name' => 'Malaya Tours Island Hopping Adventure',
+            'badge' => 'Full Day',
+            'price' => 3500,
+            'description' => 'Explore hidden coves, sandbars, and snorkeling spots around Siquijor.',
+            'image' => '../../assets/images/island_hopping.jpg',
+            'page' => '../malaya-tours/',
+        ],
+        [
+            'id' => 'island-bar',
+            'name' => 'Island Bar & Clvb',
+            'badge' => '2 Hours',
+            'price' => 800,
+            'description' => 'Party together while on vacation with DJ, drinks, and good vibes.',
+            'image' => '../../assets/images/island_bar.jpg',
+            'page' => '../island-bar/',
+        ],
+        [
+            'id' => 'coast-grill',
+            'name' => 'Coast Grilled Nights',
+            'badge' => '3 Hours',
+            'price' => 500,
+            'description' => 'Freshly grilled seafood and meat while enjoying the night.',
+            'image' => '../../assets/images/Beach-BBQ-9.jpg',
+            'page' => '../beach-bbq/',
+        ],
+    ];
+}
 
 $bookingSearch = $_SESSION['booking_search'] ?? [];
 unset($_SESSION['booking_search']);
@@ -156,9 +220,9 @@ $prefillExperience = sanitize_input($_GET['experience'] ?? $_GET['exp'] ?? '');
                             <div class="booking-field-outlined">
                                 <label for="bookRoomType">Select Room Type</label>
                                 <select id="bookRoomType" name="room_type">
-                                    <option value="" disabled <?= $roomTypeIndex === false ? 'selected' : '' ?>>Choose from 5 options ›</option>
+                                    <option value="" disabled <?= $roomTypeIndex === false ? 'selected' : '' ?>>Choose from <?= count($roomTypes) ?> options ›</option>
                                     <?php foreach ($roomTypes as $i => $room): ?>
-                                        <option value="<?= $i ?>" <?= $roomTypeIndex === $i ? 'selected' : '' ?> data-price="<?= $room['price'] ?>" data-name="<?= htmlspecialchars($room['name']) ?>" data-badge="<?= htmlspecialchars($room['badge']) ?>" data-image="<?= htmlspecialchars($room['image']) ?>"><?= htmlspecialchars($room['name']) ?></option>
+                                        <option value="<?= $i ?>" <?= $roomTypeIndex === $i ? 'selected' : '' ?> data-id="<?= $room['id'] ?? '' ?>" data-price="<?= $room['price'] ?>" data-name="<?= htmlspecialchars($room['name']) ?>" data-badge="<?= htmlspecialchars($room['badge']) ?>" data-image="<?= htmlspecialchars($room['image']) ?>"><?= htmlspecialchars($room['name']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>

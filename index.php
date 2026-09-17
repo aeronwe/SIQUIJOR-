@@ -47,35 +47,63 @@ require_once __DIR__ . '/functions&val/function.php';
         ],
     ];
 
-    $rooms = [
-        [
-            'slug' => 'standard-twin',
-            'name' => 'Standard Twin Room',
-            'badge' => 'Standard',
-            'badge_class' => 'standard',
-            'specs' => '30 sqm  ·  2 Guests  ·  2 Beds',
-            'price' => '₱3200',
-            'image_url' => 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80',
-        ],
-        [
-            'slug' => 'deluxe-garden',
-            'name' => 'Deluxe Garden View',
-            'badge' => 'Deluxe',
-            'badge_class' => 'deluxe',
-            'specs' => '38 sqm  ·  2 Guests  ·  King',
-            'price' => '₱4500',
-            'image_url' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80',
-        ],
-        [
-            'slug' => 'premier-ocean',
-            'name' => 'Premier Ocean Suite',
-            'badge' => 'Suite',
-            'badge_class' => 'suite',
-            'specs' => '58 sqm  ·  3 Guests  ·  King + Extra Bed',
-            'price' => '₱8200',
-            'image_url' => 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80',
-        ],
-    ];
+    // Dynamic rooms from MySQL with fallback
+    $rooms = [];
+    try {
+        $pdo = getConnection();
+        $dbRooms = get_all_rooms($pdo);
+        if (!empty($dbRooms)) {
+            // Take the first 3 featured rooms for homepage preview
+            $featuredRooms = array_slice($dbRooms, 0, 3);
+            foreach ($featuredRooms as $r) {
+                $rooms[] = [
+                    'id'          => $r['id'],
+                    'slug'        => strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $r['name']))),
+                    'name'        => $r['name'],
+                    'badge'       => $r['badge'],
+                    'badge_class' => $r['badge_class'],
+                    'specs'       => $r['specs'],
+                    'price'       => '₱' . number_format((float)$r['price'], 0),
+                    'image_url'   => $r['image_url'],
+                ];
+            }
+        }
+    } catch (Exception $e) {
+        // Handled below if empty
+    }
+
+    // Default fallback if database is empty
+    if (empty($rooms)) {
+        $rooms = [
+            [
+                'slug' => 'standard-twin',
+                'name' => 'Standard Twin Room',
+                'badge' => 'Standard',
+                'badge_class' => 'standard',
+                'specs' => '30 sqm  ·  2 Guests  ·  2 Beds',
+                'price' => '₱3200',
+                'image_url' => 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80',
+            ],
+            [
+                'slug' => 'deluxe-garden',
+                'name' => 'Deluxe Garden View',
+                'badge' => 'Deluxe',
+                'badge_class' => 'deluxe',
+                'specs' => '38 sqm  ·  2 Guests  ·  King',
+                'price' => '₱4500',
+                'image_url' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80',
+            ],
+            [
+                'slug' => 'premier-ocean',
+                'name' => 'Premier Ocean Suite',
+                'badge' => 'Suite',
+                'badge_class' => 'suite',
+                'specs' => '58 sqm  ·  3 Guests  ·  King + Extra Bed',
+                'price' => '₱8200',
+                'image_url' => 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80',
+            ],
+        ];
+    }
 
     $diningOptions = [
         [

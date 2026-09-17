@@ -2,63 +2,104 @@
 require_once __DIR__ . '/../../functions&val/function.php';
 
 $resortName = "Ejercito's Sunscape Resort";
-$rooms = [
-    [
-        'slug' => 'standard-twin',
-        'name' => 'Standard Twin Room',
-        'badge' => 'Standard',
-        'specs' => '30 sqm  ·  2 Guests  ·  2 Beds',
-        'price' => '₱3200',
-        'price_value' => 3200,
-        'max_guests' => 2,
-        'description' => 'A comfortable retreat for easy island stays, with thoughtful amenities and a calm garden outlook.',
-        'image' => 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80',
-    ],
-    [
-        'slug' => 'deluxe-garden',
-        'name' => 'Deluxe Garden View',
-        'badge' => 'Deluxe',
-        'specs' => '38 sqm  ·  2 Guests  ·  King Bed',
-        'price' => '₱4500',
-        'price_value' => 4500,
-        'max_guests' => 2,
-        'description' => 'Wake up to tropical greenery in a spacious room designed for a slower, more comfortable escape.',
-        'image' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80',
-    ],
-    [
-        'slug' => 'premier-ocean',
-        'name' => 'Premier Ocean Suite',
-        'badge' => 'Suite',
-        'specs' => '58 sqm  ·  3 Guests  ·  King + Extra Bed',
-        'price' => '₱8200',
-        'price_value' => 8200,
-        'max_guests' => 3,
-        'description' => 'Enjoy generous living space and a refined island atmosphere made for memorable stays.',
-        'image' => 'https://a0.muscache.com/im/pictures/hosting/Hosting-22680436/original/42f1ab5b-f7fb-4287-ba13-e34f1758563d.jpeg?im_w=1200',
-    ],
-    [
-        'slug' => 'family-villa',
-        'name' => 'Family Beach Villa',
-        'badge' => 'Villa',
-        'specs' => '85 sqm  ·  5 Guests  ·  2 Beds',
-        'price' => '₱12500',
-        'price_value' => 12500,
-        'max_guests' => 5,
-        'description' => 'A private, easygoing base for families who want more room to gather, rest, and explore.',
-        'image' => 'https://images.squarespace-cdn.com/content/v1/5b4f0c8d89c17294e53d4ffc/1532678056046-2I393HL258IGMVG5LB7Z/351bbf9b32ea226d4294d111dad38ed0.jpg?format=2500w',
-    ],
-    [
-        'slug' => 'honeymoon-paradise',
-        'name' => 'Honeymoon Paradise Suite',
-        'badge' => 'Suite',
-        'specs' => '72 sqm  ·  2 Guests  ·  King Bed',
-        'price' => '₱15000',
-        'price_value' => 15000,
-        'max_guests' => 2,
-        'description' => 'A romantic hideaway with the space and privacy to make a special island holiday feel timeless.',
-        'image' => 'https://media.cntraveller.com/photos/611bf43e69410e829d87eb1a/16:9/w_1920,c_limit/pangulasian_cnt_17sept12_pr.jpg',
-    ],
-];
+$rooms = [];
+try {
+    $pdo = getConnection();
+    $dbRooms = get_all_rooms($pdo);
+    if (!empty($dbRooms)) {
+        foreach ($dbRooms as $r) {
+            $guests = 2;
+            if (preg_match('/(\d+)\s*Guests?/i', $r['specs'], $m)) {
+                $guests = (int) $m[1];
+            }
+            $rooms[] = [
+                'id'          => $r['id'],
+                'slug'        => strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $r['name']))),
+                'name'        => $r['name'],
+                'badge'       => $r['badge'],
+                'badge_class' => $r['badge_class'],
+                'specs'       => $r['specs'],
+                'price'       => '₱' . number_format((float)$r['price'], 0),
+                'price_value' => (float)$r['price'],
+                'max_guests'  => $guests,
+                'description' => $r['description'] ?: '',
+                'image'       => $r['image_url'],
+            ];
+        }
+    }
+} catch (Exception $e) {
+    // Handled below if empty
+}
+
+if (empty($rooms)) {
+    $rooms = [
+        [
+            'id' => 1,
+            'slug' => 'standard-twin',
+            'name' => 'Standard Twin Room',
+            'badge' => 'Standard',
+            'badge_class' => 'standard',
+            'specs' => '30 sqm  ·  2 Guests  ·  2 Beds',
+            'price' => '₱3200',
+            'price_value' => 3200,
+            'max_guests' => 2,
+            'description' => 'A comfortable retreat for easy island stays, with thoughtful amenities and a calm garden outlook.',
+            'image' => 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80',
+        ],
+        [
+            'id' => 2,
+            'slug' => 'deluxe-garden',
+            'name' => 'Deluxe Garden View',
+            'badge' => 'Deluxe',
+            'badge_class' => 'deluxe',
+            'specs' => '38 sqm  ·  2 Guests  ·  King Bed',
+            'price' => '₱4500',
+            'price_value' => 4500,
+            'max_guests' => 2,
+            'description' => 'Wake up to tropical greenery in a spacious room designed for a slower, more comfortable escape.',
+            'image' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80',
+        ],
+        [
+            'id' => 3,
+            'slug' => 'premier-ocean',
+            'name' => 'Premier Ocean Suite',
+            'badge' => 'Suite',
+            'badge_class' => 'suite',
+            'specs' => '58 sqm  ·  3 Guests  ·  King + Extra Bed',
+            'price' => '₱8200',
+            'price_value' => 8200,
+            'max_guests' => 3,
+            'description' => 'Enjoy generous living space and a refined island atmosphere made for memorable stays.',
+            'image' => 'https://a0.muscache.com/im/pictures/hosting/Hosting-22680436/original/42f1ab5b-f7fb-4287-ba13-e34f1758563d.jpeg?im_w=1200',
+        ],
+        [
+            'id' => 4,
+            'slug' => 'family-villa',
+            'name' => 'Family Beach Villa',
+            'badge' => 'Villa',
+            'badge_class' => 'villa',
+            'specs' => '85 sqm  ·  5 Guests  ·  2 Beds',
+            'price' => '₱12500',
+            'price_value' => 12500,
+            'max_guests' => 5,
+            'description' => 'A private, easygoing base for families who want more room to gather, rest, and explore.',
+            'image' => 'https://images.squarespace-cdn.com/content/v1/5b4f0c8d89c17294e53d4ffc/1532678056046-2I393HL258IGMVG5LB7Z/351bbf9b32ea226d4294d111dad38ed0.jpg?format=2500w',
+        ],
+        [
+            'id' => 5,
+            'slug' => 'honeymoon-paradise',
+            'name' => 'Honeymoon Paradise Suite',
+            'badge' => 'Premium',
+            'badge_class' => 'premium',
+            'specs' => '72 sqm  ·  2 Guests  ·  King Bed',
+            'price' => '₱15000',
+            'price_value' => 15000,
+            'max_guests' => 2,
+            'description' => 'A romantic hideaway with the space and privacy to make a special island holiday feel timeless.',
+            'image' => 'https://media.cntraveller.com/photos/611bf43e69410e829d87eb1a/16:9/w_1920,c_limit/pangulasian_cnt_17sept12_pr.jpg',
+        ],
+    ];
+}
 
 $roomTypes = ['all', 'standard', 'deluxe', 'suite', 'villa'];
 $priceRanges = ['all', 'under-5000', '5000-10000', 'over-10000'];
