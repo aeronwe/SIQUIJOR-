@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS admins (
     UNIQUE KEY uq_admins_email (email)
 ) ENGINE=InnoDB;
 
--- Default admin seed (password: Admin@123)
+-- Default admin
 INSERT IGNORE INTO admins (name, email, password) VALUES
 ('Resort Admin', 'admin@sunscape.com', '$2y$10$LcOztzfCYMzEdnWFOn4sieszPb2RM3WKBkqSoWe9ivsUzl3Vif6xC');
 
