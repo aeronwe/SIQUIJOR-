@@ -62,6 +62,11 @@ try {
                 $badge = $s['hours'];
             }
 
+            $experienceImage = trim((string) ($s['image_url'] ?? ''));
+            if ($experienceImage !== '' && !preg_match('/^(https?:)?\/\//i', $experienceImage)) {
+                $experienceImage = '../../' . ltrim(preg_replace('#^(?:\.\.?/)+#', '', $experienceImage), '/');
+            }
+
             $experiences[] = [
                 'id'          => $slug,
                 'service_id'  => (int)$s['id'],
@@ -69,7 +74,7 @@ try {
                 'badge'       => $badge,
                 'price'       => (float) $s['price'] ?: 500,
                 'description' => $s['description'] ?: '',
-                'image'       => $s['image_url'],
+                'image'       => $experienceImage,
                 'page'        => $page,
             ];
         }

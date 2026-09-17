@@ -425,6 +425,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        updateBookingSummary();
+
         // Confirm Booking 
         const confirmBtn = document.getElementById('btnConfirmBooking');
         const modalOverlay = document.getElementById('bookingModalOverlay');
