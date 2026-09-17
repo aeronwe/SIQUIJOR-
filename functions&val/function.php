@@ -292,6 +292,32 @@ function get_reservations_by_user_id(PDO $pdo, int $user_id): array
     return $stmt->fetchAll();
 }
 
+function add_reservation_service(PDO $pdo, int $reservation_id, int $service_id, int $guests = 1, float $price = 0.00): bool
+{
+    $stmt = $pdo->prepare('
+        INSERT INTO reservation_services (reservation_id, service_id, guests, price)
+        VALUES (:reservation_id, :service_id, :guests, :price)
+    ');
+    return $stmt->execute([
+        'reservation_id' => $reservation_id,
+        'service_id'     => $service_id,
+        'guests'         => $guests,
+        'price'          => $price,
+    ]);
+}
+
+function get_reservation_services(PDO $pdo, int $reservation_id): array
+{
+    $stmt = $pdo->prepare('
+        SELECT rs.*, s.name AS service_name, s.category AS service_category, s.image_url AS service_image
+        FROM reservation_services rs
+        INNER JOIN services s ON rs.service_id = s.id
+        WHERE rs.reservation_id = :reservation_id
+    ');
+    $stmt->execute(['reservation_id' => $reservation_id]);
+    return $stmt->fetchAll();
+}
+
 // ── Admin Authentication ──────────────────────────────────
 
 function is_admin_logged_in(): bool

@@ -146,6 +146,30 @@ try {
         $room_id
     );
 
+    // Save selected experiences to reservation_services
+    if (!empty($experiences_input) && is_array($experiences_input)) {
+        foreach ($experiences_input as $exp) {
+            $service_id = !empty($exp['id']) && is_numeric($exp['id']) ? (int) $exp['id'] : null;
+            $e_name     = sanitize_input($exp['name'] ?? '');
+            $e_guests   = max(1, (int) ($exp['guests'] ?? 1));
+            $e_price    = (float) ($exp['total'] ?? 0);
+
+            // Fallback: match by service name if id is not an integer
+            if (!$service_id && !empty($e_name)) {
+                $stmtServ = $pdo->prepare('SELECT id FROM services WHERE name = :name LIMIT 1');
+                $stmtServ->execute(['name' => $e_name]);
+                $foundId = $stmtServ->fetchColumn();
+                if ($foundId) {
+                    $service_id = (int) $foundId;
+                }
+            }
+
+            if ($service_id) {
+                add_reservation_service($pdo, $reservation_id, $service_id, $e_guests, $e_price);
+            }
+        }
+    }
+
     echo json_encode([
         'success'        => true,
         'reservation_id' => $reservation_id,

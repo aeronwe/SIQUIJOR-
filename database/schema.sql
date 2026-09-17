@@ -69,6 +69,20 @@ CREATE TABLE IF NOT EXISTS reservations (
     CONSTRAINT fk_reservations_room FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS reservation_services (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    reservation_id INT UNSIGNED NOT NULL,
+    service_id INT UNSIGNED NOT NULL,
+    guests INT UNSIGNED NOT NULL DEFAULT 1,
+    price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_res_serv_reservation (reservation_id),
+    KEY idx_res_serv_service (service_id),
+    CONSTRAINT fk_res_serv_reservation FOREIGN KEY (reservation_id) REFERENCES reservations(id) ON DELETE CASCADE,
+    CONSTRAINT fk_res_serv_service FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
 CREATE TABLE IF NOT EXISTS products (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     category ENUM('food','beverage','merchandise') NOT NULL,
